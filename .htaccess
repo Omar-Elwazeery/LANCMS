@@ -1,0 +1,19 @@
+# Apache: keep config, logs, SQL and the installer lock away from browsers.
+Options -Indexes
+
+<FilesMatch "^(_config\.php|_config\.sample\.php|error_compat\.log|CHANGELOG\.txt|LICENSE)$|\.(sql|log|md|inc)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Uploaded files must never be executed as PHP
+<IfModule mod_php.c>
+    <Directory "files">
+        php_flag engine off
+    </Directory>
+</IfModule>
