@@ -17,11 +17,9 @@ if ($x->is_secure()) {
 		if (empty($_POST)) { 
 			$x->display_top(); 
 			if (!$master['authbyiponly']) { ?>
-				<script language="javascript" type="text/javascript" src="include/_md5.js"></script>
 				<script language="javascript" type="text/javascript"> 
 				<!-- 
 				function doLogin() { 
-				if(document.loginm.passwd.value != "") document.loginm.passwd.value = calcMD5(document.loginm.passwd.value);
 				document.loginm.javascript.value = "yes";
 				} 
 				// --> 
@@ -50,7 +48,7 @@ if ($x->is_secure()) {
 			}
 			if (!$master['authbyiponly']) { ?>
 				<font size=1>&nbsp;<?php get_lang('password',1) ?> <br /></font>
-				<input type="password" name="passwd" maxlength="34" style="width: 99%" /><br />
+				<input type="password" name="passwd" maxlength="72" style="width: 99%" /><br />
 				<?php
 			} ?>
 			<input type="hidden" name="ref" value="<?php echo (preg_match('/^[a-zA-Z_0-9\-\/]*[a-zA-Z_0-9\-]+\.php$/',utf8_decode($_GET['ref']))?utf8_decode($_GET['ref']):''); ?>">
@@ -75,19 +73,12 @@ if ($x->is_secure()) {
 			include 'include/cl_validation.php';
 			$valid = new validate();
 			
-			if (!$master['authbyiponly']) { 
-				if ($valid->get_value('javascript')=='') {
-					if($valid->get_value('passwd')!='') $valid->set_value('passwd',md5($valid->get_value('passwd')));
-				}
-			}
-			
 			$data = $dbc->database_query("SELECT * FROM users WHERE username='".$valid->get_value('username')."'");
 			if ($dbc->database_num_rows($data)) {
 				$row = $dbc->database_fetch_assoc($data);
 				if (!$master['authbyiponly']) { 
 					if ($valid->is_empty('passwd',get_lang('blank_pass'))) {
-						$temporary = crypt($valid->get_value('passwd'), $row['passwd']);
-						$valid->is_same($temporary,$row['passwd'], get_lang('bad_pass'));
+						if (!lancms_password_check(lancms_unescape($valid->get_value('passwd')), $row['passwd'])) { $valid->add_error(get_lang('bad_pass')); }
 					}
 				} else {
 					if (!$dbc->database_num_rows($dbc->database_query("SELECT * FROM users WHERE username='".$valid->get_value("username")."' AND recent_ip='".$_SERVER['REMOTE_ADDR']."'"))) {
@@ -104,8 +95,12 @@ if ($x->is_secure()) {
 				$row = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM users WHERE username='".$valid->get_value('username')."'"));
 				$allgood = true;
 
-				mt_srand((double)microtime() * 1000000);
-				$sessionid = md5(uniqid(mt_rand(),1));
+				if (function_exists('random_bytes')) {
+					$sessionid = bin2hex(random_bytes(16));
+				} else {
+					mt_srand((double)microtime() * 1000000);
+					$sessionid = md5(uniqid(mt_rand(),1));
+				}
 				if (!$master['authbyiponly']) {
 					$holder = " recent_ip='".$_SERVER['REMOTE_ADDR']."',";
 				} else {
@@ -119,13 +114,13 @@ if ($x->is_secure()) {
 				} else {
 					$expire = date('U',$end)+86400; // end of the lan + 1 day.
 				}
-				if (!setcookie('username',$row['username'],$expire)) {
+				if (!setcookie('username',$row['username'],$expire,'','',false,true)) {
 					$allgood = false;
 				}
-				if (!setcookie('userid',$row['userid'],$expire)) {
+				if (!setcookie('userid',$row['userid'],$expire,'','',false,true)) {
 					$allgood = false;
 				}
-				if (!setcookie('sesid',$sessionid,$expire)) {
+				if (!setcookie('sesid',$sessionid,$expire,'','',false,true)) {
 					$allgood = false;
 				}
 				

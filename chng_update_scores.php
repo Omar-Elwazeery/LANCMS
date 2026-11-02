@@ -31,7 +31,7 @@ if ($x->is_secure()) {
 			if($no_winner) { ?>
 				<form action="chng_update_scores.php" method="POST">
 				<input type="hidden" name="id" value="<?php echo $tournament['tourneyid']; ?>">
-				<input type="hidden" name="matchid" value="<?php echo $_GET['matchid']; ?>">
+				<input type="hidden" name="matchid" value="<?php echo htmlspecialchars(stripslashes($_GET['matchid']), ENT_QUOTES); ?>">
 				<input type="hidden" name="i" value="<?php echo (!empty($_GET['i'])?$_GET['i']:''); ?>">
 				<input type="hidden" name="j" value="<?php echo (!empty($_GET['j'])?$_GET['j']:''); ?>">
 				<input type="hidden" name="b" value="<?php echo (!empty($_GET['b'])?$_GET['b']:''); ?>">

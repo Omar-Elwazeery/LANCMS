@@ -43,7 +43,7 @@ if (empty($_POST) && $x->is_secure()) {
 		$username		= $username_prefix.$i;
 		$first_name		= $username.'_firstname';
 		$last_name		= $username.'_lastname';
-		$passwd			= crypt(md5($username));
+		$passwd			= lancms_password_hash($username);
         $query          = "INSERT INTO `users` (dateformat, language, skin, priv_level, username, passwd, date_of_arrival, recent_ip, email, first_name, last_name) 
                                         VALUES ('".$master['dateformat']."', '".$master['currentlanguage']."', '".$master['currentskin']."', 1, '".$username."', '".$passwd."', '".date('Y-m-d H:i:s')."', '127.0.0.1', '', '".$first_name."', '".$last_name."')";
 		$dbc->database_query($query);

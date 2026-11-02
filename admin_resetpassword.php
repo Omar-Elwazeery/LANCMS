@@ -10,12 +10,9 @@ if ($x->is_secure()) {
 		<?php
 		begitem(get_lang('plural')); ?>
 		<form action="<?php echo get_script_name(); ?>" method="POST" name="modify">
-		<script language="javascript" src="include/_md5.js"></script>
 		<script language="javascript">
 		<!-- 
 		function doLogin() { 
-		if(document.modify.new_passwd.value != "") document.modify.new_passwd.value = calcMD5(document.modify.new_passwd.value);
-		if(document.modify.new_passwd_confirm.value != "") document.modify.new_passwd_confirm.value = calcMD5(document.modify.new_passwd_confirm.value);
 		document.modify.javascript.value = "yes";
 		} 
 		// --> 
@@ -33,9 +30,9 @@ if ($x->is_secure()) {
 		</select><br />
 		<br />
 		<font size="1"><b><?php echo get_lang('newpass'); ?></b><br /></font>
-		<input type="password" name="new_passwd" maxlength="60" style="width: 99%" /><br />
+		<input type="password" name="new_passwd" maxlength="72" style="width: 99%" /><br />
 		<font size="1"><b><?php echo get_lang('confirm'); ?></b><br /></font>
-		<input type="password" name="new_passwd_confirm" maxlength="60" style="width: 99%" /><br />
+		<input type="password" name="new_passwd_confirm" maxlength="72" style="width: 99%" /><br />
 		<br />
 		<div align="right"><input type="submit" name="submit" value="<?php echo get_lang('submit_reset'); ?>" style="width: 120px" onClick="doLogin(); return true;" class="formcolors" /></div>
 		</form>
@@ -47,10 +44,6 @@ if ($x->is_secure()) {
 		require_once 'include/cl_validation.php';
 		$valid = new validate();
 		
-		if ($valid->get_value('javascript')=='') {
-			if ($valid->get_value('new_passwd')!='') $valid->set_value('new_passwd',md5($valid->get_value('new_passwd')));
-			if ($valid->get_value('new_passwd_confirm')!='') $valid->set_value('new_passwd_confirm',md5($valid->get_value('new_passwd_confirm')));
-		}
 		
 		$valid->is_empty('username',get_lang('error_username'));		
 		$valid->is_empty('new_passwd',get_lang('error_new_passwd'));
@@ -58,7 +51,7 @@ if ($x->is_secure()) {
 		$valid->is_same($valid->get_value('new_passwd'),$valid->get_value('new_passwd_confirm'),get_lang('error_new_passwd_same'));		
 		
 		if (!$valid->is_error()) {
-			$holder_passwd = crypt($valid->get_value('new_passwd'));
+			$holder_passwd = lancms_password_hash(lancms_unescape($valid->get_value('new_passwd')));
 			if ($dbc->database_query ("UPDATE users SET passwd='".$holder_passwd."' WHERE userid='".$valid->get_value("username")."'")) {
 				echo get_lang('update_success');
                 echo "<br /><br /> &gt; <a href=\"admin_resetpassword.php\">".get_lang('update_another')."</a>.<br /><br />";

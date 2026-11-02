@@ -100,8 +100,8 @@ if ($x->is_secure()) {
 		sendMessage( $sock, $_GET['action'], $cert );
 		getMessage( $sock, $key );
 		sendMessage( $sock, $_GET['server'], $cert );
-		if( $_GET['action'] == 'start' ) $dbc->database_query( "UPDATE satellite_clients SET running${_GET['server']}='1' WHERE ip='${_GET['ip']}';" );
-		else $dbc->database_query( "UPDATE satellite_clients SET running${_GET['server']}='0' WHERE ip='${_GET['ip']}';" );
+		if( $_GET['action'] == 'start' ) $dbc->database_query( "UPDATE satellite_clients SET running".(int)$_GET['server']."='1' WHERE ip='${_GET['ip']}';" );
+		else $dbc->database_query( "UPDATE satellite_clients SET running".(int)$_GET['server']."='0' WHERE ip='${_GET['ip']}';" );
 		$x->display_slim("success!",get_script_name());
 	}
 	elseif( $_GET['action'] == 'manage' )
@@ -155,7 +155,7 @@ if ($x->is_secure()) {
 			$filename = strtr( implode( '/', $filename ), array( '.' => '^', '!' => '', '/' => '~' ) );	
 			if( $_FILES[$filename]['error'] === 0 )
 			{
-				$name = $_FILES[$filename]['name'];
+				$name = preg_replace('/[^A-Za-z0-9._ -]/', '_', basename(str_replace('\\', '/',$_FILES[$filename]['name']))); if ($name === '' || $name[0] === '.') { $name = '_' . $name; }
 				$path = strtr( $filename, array( '^' => '.', '~' => '/' ) );
 				$out .= "Uploading file $name... ";
 				$duplicate = $dbc->database_query( "SELECT * FROM satellite_config_files WHERE path='${row['path']}' AND filename='$name';" );
@@ -177,7 +177,7 @@ if ($x->is_secure()) {
 	}
 	elseif( $_GET['action'] == 'ftp' ) // need to add error detection if ftp connect fails
 	{
-		$result = $dbc->database_query( "SELECT passwd,game FROM satellite_clients WHERE ip='${_GET['ip']}';" );
+		if (strpos($_GET['path'], '..') !== false || strpos($_GET['file'], '..') !== false || preg_match('#[/\\\\]#', $_GET['file'])) { die('invalid path'); } $result = $dbc->database_query( "SELECT passwd,game FROM satellite_clients WHERE ip='${_GET['ip']}';" );
 		$row = $dbc->database_fetch_array( $result );
 		$game = $row['game'];
 		$passwd = $row['passwd'];
@@ -219,7 +219,7 @@ if ($x->is_secure()) {
 	{
 		foreach( $_POST['files'] as $thefile )
 		{
-			$thefile = strtr( $thefile, array( '^' => '.', '~' => '/' ) );
+			$thefile = strtr( $thefile, array( '^' => '.', '~' => '/' ) ); if (strpos($thefile, '..') !== false) { continue; }
 			$temp = explode( "/", $thefile );
 			$filename = array_pop( $temp );
 			array_shift( $temp );

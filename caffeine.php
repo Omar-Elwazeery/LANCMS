@@ -118,9 +118,9 @@ if ($toggle['caffeine']) {
 			<?php 
 			$query = 'SELECT * FROM users where caffeine_mg!=0 ORDER BY caffeine_mg DESC';
 				$query .= ' LIMIT ';
-				$query .= (!empty($_GET[$pager->get_GET_start_var()]) ? $_GET[$pager->get_GET_start_var()] : 0);
+				$query .= (!empty($_GET[$pager->get_GET_start_var()]) ? (int)$_GET[$pager->get_GET_start_var()] : 0);
 				$query .= ',';
-				$query .= (!empty($_GET[$pager->get_GET_per_var()]) && $_GET[$pager->get_GET_per_var()] <= 100 ? $_GET[$pager->get_GET_per_var()] : 50);
+				$query .= (!empty($_GET[$pager->get_GET_per_var()]) && $_GET[$pager->get_GET_per_var()] <= 100 ? (int)$_GET[$pager->get_GET_per_var()] : 50);
 
 			$data = $dbc->database_query($query);
 			$counter = (!empty($_GET[$pager->get_GET_start_var()]) ? $_GET[$pager->get_GET_start_var()]:0) + 1;

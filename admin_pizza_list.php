@@ -99,7 +99,7 @@ if($toggle['foodrun']&&$x->is_secure()) { ?>
           <input id="p-sum" type="hidden" name="summary_page" value="/admin_pizza_list.php">
       		<input id="p-id" type="hidden" name="id" value="<?php echo $row['id']; ?>">
       		<input id="p-one_row" type="hidden" name="_one_row_only" value="2">
-      		<input id="p-hid" type="hidden" name="_hidden_id" value="0&o=<?php echo $_GET['o']; ?>">
+      		<input id="p-hid" type="hidden" name="_hidden_id" value="0&o=<?php echo htmlspecialchars(stripslashes($_GET['o']), ENT_QUOTES); ?>">
       		<input id="p-pid" type="hidden" name="pizzaid" value="<?php echo $row['pizzaid']; ?>">
       		<input id="p-qty" type="hidden" name="quantity" value="<?php echo $row['quantity']; ?>">
       		<input id="p-paid" type="hidden" name="paid" value="1">
@@ -121,7 +121,7 @@ if($toggle['foodrun']&&$x->is_secure()) { ?>
           <input id="d-sum" type="hidden" name="summary_page" value="/admin_pizza_list.php">
       		<input id="d-id" type="hidden" name="id" value="<?php echo $row['id']; ?>">
       		<input id="d-one_row" type="hidden" name="_one_row_only" value="2">
-      		<input id="d-hid" type="hidden" name="_hidden_id" value="0&o=<?php echo $_GET['o']; ?>">
+      		<input id="d-hid" type="hidden" name="_hidden_id" value="0&o=<?php echo htmlspecialchars(stripslashes($_GET['o']), ENT_QUOTES); ?>">
       		<input id="d-pid" type="hidden" name="pizzaid" value="<?php echo $row['pizzaid']; ?>">
       		<input id="d-qty" type="hidden" name="quantity" value="<?php echo $row['quantity']; ?>">
       		<input id="d-del" type="hidden" name="delivered" value="1">

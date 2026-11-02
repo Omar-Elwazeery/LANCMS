@@ -35,7 +35,7 @@ if ($x->is_secure()) {
 					<div style="padding: 4px 2px 4px 4px; width: 100%; border: 1px dotted <?php echo $colors['primary']; ?>">
 					<strong>options</strong>: 
 					<form action="admin_generic.php" method="POST" style="display: inline">
-						<input type="hidden" name="ref" value="<?php echo basename(get_script_name()).'?id='.$_GET['id']; ?>">
+						<input type="hidden" name="ref" value="<?php echo basename(get_script_name()).'?id='.(int)$_GET['id']; ?>">
 						<input type="hidden" name="case" value="<?php if($tournament['lockjoin'] && $tournament['lockteams']) { echo "un"; } ?>lock_teams">
 						<input type="hidden" name="tourneyid" value="<?php echo $tournament['tourneyid']; ?>">
 						<input type="submit" name="submit" value="<?php if($tournament['lockjoin'] && $tournament['lockteams']) { echo "un"; } ?>lock teams" class="formcolors2">

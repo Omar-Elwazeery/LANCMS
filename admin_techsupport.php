@@ -101,7 +101,7 @@ if ($x->is_secure() && $toggle['techsupport']) {
             if ($valid->get_value('go') == "assign" || $valid->get_value('go') == "reassign"){
                 $valid->is_empty('jid', 'i need a job id, twat');
                 if(!$valid->is_error()){
-                    if($job = $dbc->database_query('SELECT * FROM `techsupport` WHERE `itemid`='.$valid->get_value('jid'))){
+                    if($job = $dbc->database_query('SELECT * FROM `techsupport` WHERE `itemid`='.(int)$valid->get_value('jid'))){
                         $row = $dbc->database_fetch_assoc($job);
                         $user = $dbc->database_fetch_assoc($dbc->database_query('SELECT * FROM `users` WHERE `userid`='.$row['userid']));
                         if (!empty($row['assigned_to'])){
@@ -185,7 +185,7 @@ if ($x->is_secure() && $toggle['techsupport']) {
                 }// END if (!$valid->is_error())
             
             }elseif ($valid->get_value('go') == "solve"){// END if ($valid->get_value('go') == "assign" || $valid->get_value('go') == "reassign")
-                if ($row = $dbc->database_query('SELECT * FROM techsupport WHERE `itemid`='.$valid->get_value('jid'))){
+                if ($row = $dbc->database_query('SELECT * FROM techsupport WHERE `itemid`='.(int)$valid->get_value('jid'))){
                     $row = $dbc->database_fetch_assoc($row);
                     $user = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM `users` WHERE `userid`=".$row['userid']));
                     begitem('solve problem');
@@ -218,7 +218,7 @@ if ($x->is_secure() && $toggle['techsupport']) {
                     
                 }
             }elseif ($valid->get_value('go') == "edit"){
-                if ($row = $dbc->database_query('SELECT * FROM techsupport WHERE `itemid`='.$valid->get_value('jid'))){
+                if ($row = $dbc->database_query('SELECT * FROM techsupport WHERE `itemid`='.(int)$valid->get_value('jid'))){
                     $row = $dbc->database_fetch_assoc($row);
                     $user = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM `users` WHERE `userid`=".$row['userid']));
                     begitem('edit');
@@ -295,7 +295,7 @@ if ($x->is_secure() && $toggle['techsupport']) {
             if($valid->get_value('go') == "assign"){
                 $valid->is_empty('jid', 'cmon i need a jid to do this!');
                 if (!$valid->is_error()){
-                    if ($dbc->database_query("UPDATE techsupport SET `assigned_to`=".$valid->get_value('assign_to')." WHERE `itemid`=".$valid->get_value('jid'))){
+                    if ($dbc->database_query("UPDATE techsupport SET `assigned_to`=".(int)$valid->get_value('assign_to')." WHERE `itemid`=".(int)$valid->get_value('jid'))){
                         ?>job has been assigned.<br />
                             <b><a href="admin_techsupport.php">back.</a></b>
                         <?php
@@ -332,7 +332,7 @@ if ($x->is_secure() && $toggle['techsupport']) {
                     }else{
                         $fixed = 0;
                     }
-                    if ($dbc->database_query("UPDATE techsupport SET `fixed`=$fixed, `info`='".$valid->get_value('info')."', `result`='".$valid->get_value('solution')."', `severity`=".$valid->get_value('severity')." WHERE itemid='".$valid->get_value('jid')."'")){
+                    if ($dbc->database_query("UPDATE techsupport SET `fixed`=$fixed, `info`='".$valid->get_value('info')."', `result`='".$valid->get_value('solution')."', `severity`=".(int)$valid->get_value('severity')." WHERE itemid='".$valid->get_value('jid')."'")){
                         ?>job has been edited.<br />
                             <b><a href="admin_techsupport.php">back.</a></b>
                         <?php

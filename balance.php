@@ -1,18 +1,19 @@
+<?php
+// Shows a user's balance. Uses the shared DB settings instead of hard-coded credentials.
+require_once '_config.php';
+require_once 'include/_compat.php';
+$link = mysqli_connect($database['server'], $database['user'], $database['passwd'], $database['database']);
+if (!$link) { die('Unable to connect to MySQL'); }
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$result = mysqli_query($link, 'SELECT balance FROM users WHERE userid=' . $id);
+?>
 <BODY TEXT="0097AE">
 <FONT FACE="arial">
 <?php
-$username = "root";
-$password = "bobobo";
-$hostname = "localhost"; 
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("Unable to connect to MySQL");
-$selected = mysql_select_db("lantastic",$dbhandle) 
-  or die("Could not select examples");
-$result = mysql_query("SELECT * FROM users WHERE userid='".$_GET["id"]."'");
-while ($row = mysql_fetch_array($result)) {
-   echo "<strong>Balance: </strong>".$row{'balance'};
+if ($result && ($row = mysqli_fetch_assoc($result))) {
+	echo '<strong>Balance: </strong>' . htmlspecialchars($row['balance']);
 }
-mysql_close($dbhandle);
+mysqli_close($link);
 ?>
  LC
  </FONT>

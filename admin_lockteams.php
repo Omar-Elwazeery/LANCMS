@@ -19,7 +19,7 @@ if ($x->is_secure()) {
 					$str = get_lang('error_unknown');
 				}
 			}
-			$x->display_slim($str,'disp_teams.php'.(!empty($_GET['id'])?'?id='.$_GET['id']:''),2);
+			$x->display_slim($str,'disp_teams.php'.(!empty($_GET['id'])?'?id='.(int)$_GET['id']:''),2);
 		} else {
 			$x->display_slim(get_lang('error_tournament_bad'),'admin_tournament.php');
 		}

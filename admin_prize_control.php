@@ -16,7 +16,7 @@ if ($toggle['prizes']) {
 			$prizecontrol = $dbc->database_fetch_array($dbc->database_query('SELECT lock_prizes, draw_mode FROM prizes_control'));
 			
 			if (isset($_POST['rewin'])) {
-				if($_POST['rewin'] > 0) $dbc->database_query("DELETE FROM prizes_unwinners WHERE userid=" . $_POST['rewin']);
+				if($_POST['rewin'] > 0) $dbc->database_query("DELETE FROM prizes_unwinners WHERE userid=" . (int)$_POST['rewin']);
 			}
 			
 			if (!empty($_POST)) {
@@ -24,17 +24,17 @@ if ($toggle['prizes']) {
 				if (is_array($_POST['displayGroup'])) {
 					foreach ($_POST['displayGroup'] AS $key => $val) {
 						if ($_POST['displayGroup'][$key] == 'on') {
-							if ($dbc->database_num_rows($dbc->database_query("SELECT * FROM prizes_display_groups WHERE prizegroup=" . $key)) == 0) {
-								$dbc->database_query("INSERT INTO prizes_display_groups VALUES(" . $key  .")");
+							if ($dbc->database_num_rows($dbc->database_query("SELECT * FROM prizes_display_groups WHERE prizegroup=" . (int)$key)) == 0) {
+								$dbc->database_query("INSERT INTO prizes_display_groups VALUES(" . (int)$key  .")");
 							}
 						} else {
-							$dbc->database_query("DELETE FROM prizes_display_groups WHERE prizegroup=" . $key);
+							$dbc->database_query("DELETE FROM prizes_display_groups WHERE prizegroup=" . (int)$key);
 						}
 					}
 				}
 			}
 			if (isset($_POST['drawMode']) && $_POST['drawMode'] != $prizecontrol['draw_mode']) {
-				$dbc->database_query("UPDATE prizes_control SET draw_mode=" . $_POST['drawMode']);
+				$dbc->database_query("UPDATE prizes_control SET draw_mode=" . (int)$_POST['drawMode']);
 			}
 			
 			$x->display_top(); ?>

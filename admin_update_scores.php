@@ -20,9 +20,9 @@ if(!$x->is_secure()||empty($_GET)||empty($_GET["id"])||empty($_GET["matchid"])||
 		<img src="img/pxt.gif" width="1" height="4" border="0" alt=""><br />
 		<form action="admin_update_tournaments.php" method="POST">
 		<input type="hidden" name="id" value="<?php echo $tournament["tourneyid"]; ?>">
-		<input type="hidden" name="matchid" value="<?php echo $_GET["matchid"]; ?>">
-		<input type="hidden" name="i" value="<?php echo $_GET["i"]; ?>">
-		<input type="hidden" name="j" value="<?php echo $_GET["j"]; ?>">
+		<input type="hidden" name="matchid" value="<?php echo htmlspecialchars(stripslashes($_GET["matchid"]), ENT_QUOTES); ?>">
+		<input type="hidden" name="i" value="<?php echo htmlspecialchars(stripslashes($_GET["i"]), ENT_QUOTES); ?>">
+		<input type="hidden" name="j" value="<?php echo htmlspecialchars(stripslashes($_GET["j"]), ENT_QUOTES); ?>">
 		<table border=0 cellpadding=0 cellspacing=0 width="100%">
 		<?php
 		while($row = $dbc->database_fetch_assoc($data)) { 

@@ -1,5 +1,5 @@
 <?php
-require_once '/include/_universal.php';
+require_once 'include/_universal.php';
 // the foodrun toggle will control this item's display aswell as food runs
 $x = new universal(get_lang('plural'),get_lang('singular'),1);
 $x->database('users_pizza','id','pizza');

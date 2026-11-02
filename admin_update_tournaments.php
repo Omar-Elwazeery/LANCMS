@@ -227,9 +227,9 @@ if ($x->is_secure()) {
 					$str = "error!";
 				}
 			}
-			if(!$tournament["ffa"]) $x->display_slim($str,"disp_tournament.php".(!empty($_POST["id"])?"?id=".$_POST["id"]:""),1);
+			if(!$tournament["ffa"]) $x->display_slim($str,"disp_tournament.php".(!empty($_POST["id"])?"?id=".(int)$_POST["id"]:""),1);
 		} else {
-			$x->display_slim("unauthorized.","disp_tournament.php".(!empty($_POST["id"])?"?id=".$_POST["id"]:""),1);
+			$x->display_slim("unauthorized.","disp_tournament.php".(!empty($_POST["id"])?"?id=".(int)$_POST["id"]:""),1);
 		}
 	} elseif(!empty($_GET)&&!empty($_GET["id"])) {
 		$tournament = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM tournaments WHERE tourneyid='".$_GET["id"]."'"));
@@ -429,9 +429,9 @@ if ($x->is_secure()) {
 			} else {
 				$str = "incorrect usage.";
 			}
-			$x->display_slim($str,"disp_tournament.php".(!empty($_GET["id"])?"?id=".$_GET["id"]:""),1);
+			$x->display_slim($str,"disp_tournament.php".(!empty($_GET["id"])?"?id=".(int)$_GET["id"]:""),1);
 		} else {
-			$x->display_slim("unauthorized.","disp_tournament.php".(!empty($_GET["id"])?"?id=".$_GET["id"]:""),1);
+			$x->display_slim("unauthorized.","disp_tournament.php".(!empty($_GET["id"])?"?id=".(int)$_GET["id"]:""),1);
 		}
 	} else {
 		$x->display_slim("incorrect usage.","disp_tournament.php");

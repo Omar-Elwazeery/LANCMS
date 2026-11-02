@@ -64,7 +64,7 @@ if ($x->is_secure()) {
 				$str = 'error!';
 			}
 		}
-		$x->display_slim($str,'disp_teams.php'.(!empty($_POST['id'])?'?id='.$_POST['id']:''),2);
+		$x->display_slim($str,'disp_teams.php'.(!empty($_POST['id'])?'?id='.(int)$_POST['id']:''),2);
 	} elseif (!empty($_GET) && !empty($_GET['id'])) {
 		$tournament = $dbc->database_fetch_assoc($dbc->database_query('SELECT * FROM tournaments WHERE tourneyid='.(int)$_GET['id']));
 		$allgood = true;
@@ -196,7 +196,7 @@ if ($x->is_secure()) {
 				$str = 'error!';
 			}
 		}
-		$x->display_slim($str,'disp_teams.php'.(!empty($_GET['id'])?'?id='.$_GET['id']:''),2);
+		$x->display_slim($str,'disp_teams.php'.(!empty($_GET['id'])?'?id='.(int)$_GET['id']:''),2);
 	} else {
 		$x->display_slim('incorrect usage.','disp_teams.php');
 	}

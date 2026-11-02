@@ -1,1 +1,20 @@
-
+# local config / secrets
+_config.php
+# runtime output
+error_compat.log
+error_log.txt
+*.log
+# uploads
+files/*
+!files/.gitkeep
+!files/.htaccess
+music/mp3s/*
+!music/mp3s/.gitkeep
+!music/mp3s/.htaccess
+# installer lock
+install/DISABLED
+# editor / OS
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

@@ -47,7 +47,7 @@ if ($toggle['prizes']) {
 					$dbc->database_query("INSERT INTO prizes_winners VALUES(''," . $prize['prizeid'] . "," . $prize['prizegroup'] . "," . $winner['userid'] . ",0,0,0)");
 				}
 				if (isset($_POST['drawGroupID'])) {
-					$prizesInGroup = $dbc->database_query("SELECT * FROM prizes WHERE prizegroup=" . $_POST['drawGroupID'] . " AND tourneyid=0");
+					$prizesInGroup = $dbc->database_query("SELECT * FROM prizes WHERE prizegroup=" . (int)$_POST['drawGroupID'] . " AND tourneyid=0");
 					while ($prize = $dbc->database_fetch_array($prizesInGroup)) {
 						unset($numAlreadyWon);
 						unset($maxGroupOrder);
@@ -67,7 +67,7 @@ if ($toggle['prizes']) {
 					}
 				}
 				if ($_POST['drawQuantityID']) {
-					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes WHERE prizeid=" . $_POST['drawQuantityID']));
+					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes WHERE prizeid=" . (int)$_POST['drawQuantityID']));
 					$numAlreadyWon = $dbc->database_num_rows($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . $prize['prizeid']));
 					if($numAlreadyWon > 0) $maxGroupOrder = $dbc->database_result($dbc->database_query("SELECT MAX(group_order) FROM prizes_winners WHERE prizeid=" . $prize['prizeid']), 0) + 1;
 					else $maxGroupOrder = 1;
@@ -75,22 +75,22 @@ if ($toggle['prizes']) {
 					$dbc->database_query("INSERT INTO prizes_winners VALUES(''," . $prize['prizeid'] . "," . $prize['prizegroup'] . "," . $winner['userid'] . "," . $maxGroupOrder . ",0,0)");
 				}
 				if ($_POST['claimID']) {
-					$dbc->database_query("UPDATE prizes_winners SET claimed=1 WHERE prizeid=" . $_POST['claimID']);
+					$dbc->database_query("UPDATE prizes_winners SET claimed=1 WHERE prizeid=" . (int)$_POST['claimID']);
 				}
 				if ($_POST['claimQuantityID']) {
-					$dbc->database_query("UPDATE prizes_winners SET claimed=1 WHERE prizeid=" . $_POST['claimQuantityID'] . " AND group_order=" . $_POST['claimQuantityGroupNum']);
+					$dbc->database_query("UPDATE prizes_winners SET claimed=1 WHERE prizeid=" . (int)$_POST['claimQuantityID'] . " AND group_order=" . (int)$_POST['claimQuantityGroupNum']);
 				}
 				if ($_POST['claimTourney']) {
-					$dbc->database_query("UPDATE prizes SET tourneyclaim=1 WHERE prizeid=" . $_POST['claimTourney']);
+					$dbc->database_query("UPDATE prizes SET tourneyclaim=1 WHERE prizeid=" . (int)$_POST['claimTourney']);
 				}
 				if ($_POST['unclaimID']) {
-					$dbc->database_query("UPDATE prizes_winners SET claimed=0 WHERE prizeid=" . $_POST['unclaimID']);
+					$dbc->database_query("UPDATE prizes_winners SET claimed=0 WHERE prizeid=" . (int)$_POST['unclaimID']);
 				}
 				if ($_POST['unclaimQuantityID']) {
-					$dbc->database_query("UPDATE prizes_winners SET claimed=0 WHERE prizeid=" . $_POST['unclaimQuantityID'] . " AND group_order=" . $_POST['unclaimQuantityGroupNum']);
+					$dbc->database_query("UPDATE prizes_winners SET claimed=0 WHERE prizeid=" . (int)$_POST['unclaimQuantityID'] . " AND group_order=" . (int)$_POST['unclaimQuantityGroupNum']);
 				}
 				if ($_POST['drawQuantityPrizeID']) {
-					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes WHERE prizeid=" . $_POST['drawQuantityPrizeID']));
+					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes WHERE prizeid=" . (int)$_POST['drawQuantityPrizeID']));
 					$numAlreadyWon = $dbc->database_num_rows($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . $prize['prizeid']));
 					if($numAlreadyWon > 0) $maxGroupOrder = $dbc->database_result($dbc->database_query("SELECT MAX(group_order) FROM prizes_winners WHERE prizeid=" . $prize['prizeid']), 0) + 1;
 					else $maxGroupOrder = 1;
@@ -101,21 +101,21 @@ if ($toggle['prizes']) {
 					}
 				}
 				if ($_POST['redrawID']) {
-					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . $_POST['redrawID']));
+					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . (int)$_POST['redrawID']));
 					$dbc->database_query("INSERT INTO prizes_unwinners VALUES(" . $prize['winnerid'] . ")");
 					$dbc->database_query("DELETE FROM prizes_winners WHERE prizeid=" . $prize['prizeid']);
 					$winner = draw_prize($_POST['redrawID']);
 					$dbc->database_query("INSERT INTO prizes_winners VALUES(''," . $prize['prizeid'] . "," . $prize['prizegroup'] . "," . $winner['userid'] . ",0,0,0)");
 				}
 				if ($_POST['redrawQuantityID']) {
-					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . $_POST['redrawQuantityID'] . " AND group_order=" . $_POST['redrawQuantityGroupNum']));
+					$prize = $dbc->database_fetch_array($dbc->database_query("SELECT * FROM prizes_winners WHERE prizeid=" . (int)$_POST['redrawQuantityID'] . " AND group_order=" . (int)$_POST['redrawQuantityGroupNum']));
 					$dbc->database_query("DELETE FROM prizes_winners WHERE id=" . $prize['id']);
 					$dbc->database_query("INSERT INTO prizes_unwinners VALUES(" . $prize['winnerid'] . ")");
 					$winner = draw_prize($prize['prizeid']);
-					$dbc->database_query("INSERT INTO prizes_winners VALUES(''," . $prize['prizeid'] . "," . $prize['prizegroup'] . "," . $winner['userid'] . "," . $_POST['redrawQuantityGroupNum'] . ",0,0)");
+					$dbc->database_query("INSERT INTO prizes_winners VALUES(''," . $prize['prizeid'] . "," . $prize['prizegroup'] . "," . $winner['userid'] . "," . (int)$_POST['redrawQuantityGroupNum'] . ",0,0)");
 				}
 				if ($_POST['tourneyPrizeOverride']) {
-					$dbc->database_query("UPDATE prizes SET tourneyid=0, tourneyplace=0 WHERE prizeid=" . $_POST['tourneyPrizeOverride']);
+					$dbc->database_query("UPDATE prizes SET tourneyid=0, tourneyplace=0 WHERE prizeid=" . (int)$_POST['tourneyPrizeOverride']);
 				}
 				
 				
