@@ -17,10 +17,10 @@ $tournament_types = array(
 
 /*
 ladder progress [files modified]:
-	admin_teams.php
-	admin_teams_delete.php
+	admin/admin_teams.php
+	admin/admin_teams_delete.php
 
-	in progress: disp_teams.php
-	to do: chng_teams.php, chng_update_teams.php, etc
+	in progress: display/disp_teams.php
+	to do: change/chng_teams.php, change/chng_update_teams.php, etc
 */
 ?>

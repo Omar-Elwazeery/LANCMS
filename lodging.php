@@ -7,7 +7,7 @@ if ($x->is_secure()) {
 		<strong>lodging</strong>:<br />
 		<br />
 		<?php
-		$x->add_related_link('add/modify lodging','admin_lodging.php',2);
+		$x->add_related_link('add/modify lodging','admin/admin_lodging.php',2);
 		$x->display_related_links(); 
 
 		$y = new display('lodging','lodging item',0,0,'lodging','itemid','name');

@@ -10,7 +10,7 @@ function newWindow(url,width,height,name) {
 </script>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td width="150"><?php if (!empty($master['gamerhour']) || !empty($row['quote'])) { ?><a href="javascript:newWindow('gamerofthehour.php?id=<?php echo $row['userid']; ?>','200','180','gamerofthehour')"><?php } ?><b>gamer of the hour</b><?php if (!empty($master['gamerhour'])) { ?></a><?php } ?></td>
-	<td><a href="disp_users.php?id=<?php echo $row['userid']; ?>" style="color: <?php echo $colors['primary']; ?>"><b><?php echo $row['username']; ?></b></a></td>
+	<td width="150"><?php if (!empty($master['gamerhour']) || !empty($row['quote'])) { ?><a href="javascript:newWindow('game/gamerofthehour.php?id=<?php echo $row['userid']; ?>','200','180','gamerofthehour')"><?php } ?><b>gamer of the hour</b><?php if (!empty($master['gamerhour'])) { ?></a><?php } ?></td>
+	<td><a href="display/disp_users.php?id=<?php echo $row['userid']; ?>" style="color: <?php echo $colors['primary']; ?>"><b><?php echo $row['username']; ?></b></a></td>
 </tr>
 </table>

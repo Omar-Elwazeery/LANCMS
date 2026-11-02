@@ -23,7 +23,7 @@ function disp_gamingrig($name, $where, $whereNot, $logo, $websiteurl, $textcolor
 <?php	
 }
 ?>
-<a href="chng_userinfo.php"><strong>gaming rigs</strong></a><?php get_go('chng_userinfo.php'); ?><br />
+<a href="change/chng_userinfo.php"><strong>gaming rigs</strong></a><?php get_go('change/chng_userinfo.php'); ?><br />
 
 <?php
 disp_gamingrig('amd', "comp_proc='AMD'", "comp_proc!=''", 'amd.gif', 'http://www.amd.com', '#319C63', 56);

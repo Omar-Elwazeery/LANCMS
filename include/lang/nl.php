@@ -141,7 +141,7 @@ $lang = array(
 	"admin_foodrun" => array(
 	"plural" => "food runs",
 	"singular" => "food run",
-	"notes_del" => "Deze functie is momenteel afgezet en de gebruikers kunnen geen eten toevoegen. Als je wenst om zijn status te veranderen, kan je <a href=\"admin_toggle.php\">aanzetten</a>.",
+	"notes_del" => "Deze functie is momenteel afgezet en de gebruikers kunnen geen eten toevoegen. Als je wenst om zijn status te veranderen, kan je <a href=\"admin/admin_toggle.php\">aanzetten</a>.",
 	"desc_userid" => "gepost door",
 	"desc_datetime_leaving" => "vertrektijd",
 	"error_datetime_leaving" => "Je vergat de tijdsvertrek te vermelden!",

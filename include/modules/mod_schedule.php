@@ -32,10 +32,10 @@ while ($row = $dbc->database_fetch_assoc($data)) {
 	<?php
 	if ((date('U',strtotime($row['itemtime']))-date('U')) < 3600 && $row['tourneyid'] >= 0) {
 		$length = 21; 
-		echo ($row['tourneyid']>0?"<a href=\"disp_teams.php?id=".$row['tourneyid']."\">":'')."<font color=\"".$colors['primary']."\"><b>";
+		echo ($row['tourneyid']>0?"<a href=\"display/disp_teams.php?id=".$row['tourneyid']."\">":'')."<font color=\"".$colors['primary']."\"><b>";
 	} else { 
 		$length = 26; ?>
-		<?php get_arrow(); ?>&nbsp;<?php echo ($row["tourneyid"]>0?"<a href=\"disp_teams.php?id=".$row['tourneyid']."\">":''); ?><font class="sm" style="color: <?php echo $colors['blended_text']; ?>"><?php
+		<?php get_arrow(); ?>&nbsp;<?php echo ($row["tourneyid"]>0?"<a href=\"display/disp_teams.php?id=".$row['tourneyid']."\">":''); ?><font class="sm" style="color: <?php echo $colors['blended_text']; ?>"><?php
 	}
 	echo ($row['tourneyid']==-1?'food: ':'')?><?php echo ($row["tourneyid"]>0?"<u>":''); ?><b><?php echo substr($row['name'],0,$length).(strlen($row["name"])>($length-1)?"...":""); ?></b><?php echo ($row['tourneyid']>0?"</u>":''); ?></font><?php echo ($row['tourneyid']>0?"</a>":''); ?>	<font class="smm"><?php echo ($row['itemtime_priv']==2?' (a)':($row['itemtime_priv']==3?' (sa)':'')); ?></font><br />
 	<?php
@@ -55,4 +55,4 @@ while ($row = $dbc->database_fetch_assoc($data)) {
 } ?>
 </table>
 <img src="img/pxt.gif" width="1" height="4" border="0" alt="" /><br />
-<div align="right"><font class="sm">[<a href="disp_schedule.php"><b><?php echo get_lang("view_all"); ?></b></a>]</font></div>
+<div align="right"><font class="sm">[<a href="display/disp_schedule.php"><b><?php echo get_lang("view_all"); ?></b></a>]</font></div>

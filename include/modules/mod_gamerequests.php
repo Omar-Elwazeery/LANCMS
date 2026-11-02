@@ -3,7 +3,7 @@ global $dbc;
 require_once 'include/_squery.php';
 include_once 'include/gamelauncher/hlsw_supported_games.php';
 ?>
-<font class="sm"><a href="gamerequest.php"><b>open play games</b></a> in the past hour:<?php if (current_security_level() >= 1) { ?> [<a href="chng_gamerequest.php"><b>add and modify your own</b></a>]<?php } ?><?php adminlink('admin_gamerequest.php'); ?><br /></font>
+<font class="sm"><a href="game/gamerequest.php"><b>open play games</b></a> in the past hour:<?php if (current_security_level() >= 1) { ?> [<a href="change/chng_gamerequest.php"><b>add and modify your own</b></a>]<?php } ?><?php adminlink('admin/admin_gamerequest.php'); ?><br /></font>
 <?php
 spacer(1,4,1);
 ?>
@@ -49,15 +49,15 @@ spacer(1,4,1);
 		}
 		?>
 			<tr <?php echo ($counter%2==1?' bgcolor="'.$colors['cell_alternate'].'"':''); ?>>
-				<td><a href="disp_users.php?id=<?php echo $row['userid']; ?>"><?php echo $user['username']; ?></a></td>
-				<?php /* <td><a href="gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['game_name'])?$row['game_name']:$row['gamename']); ?></a></td>
+				<td><a href="display/disp_users.php?id=<?php echo $row['userid']; ?>"><?php echo $user['username']; ?></a></td>
+				<?php /* <td><a href="game/gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['game_name'])?$row['game_name']:$row['gamename']); ?></a></td>
 				*/ ?>
-				<td><a href="viewserver.php?ip=<?php echo $ipaddress; ?>&port=<?php echo $queryport; ?>&enginetype=<?php echo $row['querystr2']; ?>""><?php echo $row['game_name']; ?></a></td>
+				<td><a href="game/viewserver.php?ip=<?php echo $ipaddress; ?>&port=<?php echo $queryport; ?>&enginetype=<?php echo $row['querystr2']; ?>""><?php echo $row['game_name']; ?></a></td>
 				<td><?php if(!empty($hlsw_supported_games[$row['short']])&&$toggle['hlsw']) { ?><a href="hlsw://<?php echo $row['ipaddress']; ?>">
                                             <img src="img/little_icons/hlsw.gif" width="10" height="9" border="0" alt="connect using hlsw" align="absmiddle" /></a>&nbsp;&nbsp;<?php } ?><?php if(!empty($hlsw_supported_games[$row['short']])&&$toggle['hlsw']) { ?><a href="hlsw://<?php echo $row['ipaddress']; ?>"><?php } ?><?php echo $row['ipaddress']; ?><?php if(!empty($hlsw_supported_games[$row['short']])&&$toggle['hlsw']) { ?></a><?php } ?></td>
 				<?php /*
-				<td><a href="gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['querystr2'])&&!empty($map)?$map:'&nbsp;'); ?></a></td>
-				<td><a href="gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['querystr2'])?($num_players?$num_players:"0")." / ".($max_players?$max_players:"0"):'&nbsp;'); ?></a></td>
+				<td><a href="game/gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['querystr2'])&&!empty($map)?$map:'&nbsp;'); ?></a></td>
+				<td><a href="game/gamerequest.php#<?php echo $row['id']; ?>"><?php echo (!empty($row['querystr2'])?($num_players?$num_players:"0")." / ".($max_players?$max_players:"0"):'&nbsp;'); ?></a></td>
 				*/ ?>
 			</tr>
 			<?php

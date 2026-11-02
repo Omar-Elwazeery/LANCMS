@@ -141,7 +141,7 @@ $lang = array(
 	"admin_foodrun" => array(
 	"plural" => "food runs",
 	"singular" => "food run",
-	"notes_del" => "this feature is currently toggled off and users are not allowed to add food runs.  if you wish to change its status, you can <a href=\"admin_toggle.php\">toggle it on</a>.",
+	"notes_del" => "this feature is currently toggled off and users are not allowed to add food runs.  if you wish to change its status, you can <a href=\"admin/admin_toggle.php\">toggle it on</a>.",
 	"desc_userid" => "posté par",
 	"desc_datetime_leaving" => "heure de départ",
 	"error_datetime_leaving" => "you forgot to enter a time of departure!",

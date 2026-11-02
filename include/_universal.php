@@ -216,10 +216,10 @@ class universal extends form {
     {
 		global $lang, $master, $toggle, $lan, $colors, $images, $start, $end;
 		if(stristr($string,'success')) {
-			header('Location: '.$redirect);
+			header('Location: '.lancms_url($redirect));
 		} elseif(stristr($string,'you are not authorized to view this page.')&&current_security_level()==0) {
 			$title = $this->_name;
-			$redirect='login.php?ref='.urlencode(basename(get_script_name()));
+			$redirect='login.php?ref='.urlencode(lancms_page_path());
 			include 'include/_top_slim.php'; ?>
 			<br /><a href="<?php echo $redirect; ?>" class="radio"><strong><?php echo $string; ?> &nbsp;redirect in <span id="pendule"></span>&nbsp;seconds.</strong></a><br /><br />
 			<?php

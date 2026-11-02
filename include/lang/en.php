@@ -266,7 +266,7 @@ $lang = array(
 	"admin_foodrun" => array(
 	"plural" => "food runs",
 	"singular" => "food run",
-	"notes_del" => "this feature is currently toggled off and users are not allowed to add food runs.  if you wish to change its status, you can <a href=\"admin_toggle.php\">toggle it on</a>.",
+	"notes_del" => "this feature is currently toggled off and users are not allowed to add food runs.  if you wish to change its status, you can <a href=\"admin/admin_toggle.php\">toggle it on</a>.",
 	"desc_userid" => "posted by",
 	"desc_datetime_leaving" => "time of departure",
 	"error_datetime_leaving" => "you forgot to enter a time of departure!",
@@ -463,7 +463,7 @@ $lang = array(
 		"plural" => "prizes",
 		"singular" => "prizes",
 		"title_cp" => "prize control panel",
-		"note_lock" => " Locking the prizes is an irreversible action. Before you lock prizes, make sure that you've <a href=\"admin_prizes.php\" border=\"0\">entered
+		"note_lock" => " Locking the prizes is an irreversible action. Before you lock prizes, make sure that you've <a href=\"admin/admin_prizes.php\" border=\"0\">entered
                 all of the prizes</a> that are to be drawn for or won in tournaments. <b>Once prizes are locked, no more prizes can be added, and users cannot change the
                 prizes they've registered for</b>",
 		"note_locked" => "prizes have been locked.",

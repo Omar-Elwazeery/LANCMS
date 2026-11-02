@@ -2,21 +2,21 @@
 global $images, $colors, $master, $toggle, $userinfo, $lan, $container, $dbc; 
 if (current_security_level() >= 1) { ?>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr><td class="smm"><font color="<?php echo $colors['blended_text']; ?>"><?php get_lang("cp_cuser",1); ?></font></td><td class="sm"><strong><a href="disp_users.php?id=<?php echo $userinfo['userid']; ?>"><?php echo $userinfo['username']; ?></a></strong></td></tr>
+	<tr><td class="smm"><font color="<?php echo $colors['blended_text']; ?>"><?php get_lang("cp_cuser",1); ?></font></td><td class="sm"><strong><a href="display/disp_users.php?id=<?php echo $userinfo['userid']; ?>"><?php echo $userinfo['username']; ?></a></strong></td></tr>
 	<tr><td class="smm"><font color="<?php echo $colors['blended_text']; ?>"><?php get_lang("cp_cip",1); ?></font></td><td class="sm"><?php echo $userinfo["recent_ip"]; ?></td></tr>
 	<tr><td colspan="2"><?php spacer(1,8,1); ?></td></tr>
 		<?php
 		$bool = false;
 		if ($toggle['gamerequests']) { ?>
-			<tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="gamerequest.php" class="radio"><?php get_lang("open_play",1); ?> <strong><?php get_lang("gr",1); ?></strong></a><br /></td></tr><?php 
+			<tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="game/gamerequest.php" class="radio"><?php get_lang("open_play",1); ?> <strong><?php get_lang("gr",1); ?></strong></a><br /></td></tr><?php 
 			$bool = true;
 		}
 		if ($toggle['prizes'] && $dbc->queryOne('SELECT count(prizeid) FROM prizes')) { ?>
-			<tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="chng_prizes.php" class="radio"><?php get_lang("reg_for",1); ?> <strong><?php get_lang("prizes",1); ?></strong></a><br /></td></tr><?php 
+			<tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="change/chng_prizes.php" class="radio"><?php get_lang("reg_for",1); ?> <strong><?php get_lang("prizes",1); ?></strong></a><br /></td></tr><?php 
 			$bool = true;
 		}
         if ($toggle['pizza']) { ?>
-            <tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="pizza.php" class="radio"><?php get_lang('want_pizza',1); ?>?</a><br /></td></tr><?php
+            <tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="food/pizza.php" class="radio"><?php get_lang('want_pizza',1); ?>?</a><br /></td></tr><?php
             $bool = true;
         }
 		if ($bool) {
@@ -25,10 +25,10 @@ if (current_security_level() >= 1) { ?>
 			echo '</td></tr>';
 		}
 	$menu = array();
-	if ($toggle['benchmarks']) { $menu[get_lang("benchmarks")] = 'chng_benchmarks.php'; }
+	if ($toggle['benchmarks']) { $menu[get_lang("benchmarks")] = 'change/chng_benchmarks.php'; }
 	if ($dbc->queryOne('SELECT count(itemid) FROM lodging')) { $menu[get_lang("cp_lodge")] = 'lodging.php'; }
-	if ($dbc->queryOne('SELECT count(itemid) FROM foodplaces')) { $menu[get_lang("restaurants")] = 'restaurants.php'; }
-	if ($toggle['techsupport']) { $menu[get_lang("tech_support")] = 'techsupport.php'; }
+	if ($dbc->queryOne('SELECT count(itemid) FROM foodplaces')) { $menu[get_lang("restaurants")] = 'food/restaurants.php'; }
+	if ($toggle['techsupport']) { $menu[get_lang("tech_support")] = 'techsupport/techsupport.php'; }
 	if ($toggle['shoutbox']) { $menu[get_lang("shoutbox")] = 'shoutbox.php'; }
 	if ($toggle['policy'] && !empty($master['policyurl'])) { $menu[get_lang("policy")] = $master['policyurl']; }
     if ($toggle['staff']) { $menu[get_lang("staff")] = 'staff.php'; }
@@ -45,8 +45,8 @@ if (current_security_level() >= 1) { ?>
 		} 
 		?><tr><td colspan=2><?php spacer(1,8,1); ?></td></tr> <?php
 	} ?>
-	<?php if(!ALP_TOURNAMENT_MODE) { ?><tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="chng_userinfo.php" class="menu">><?php get_lang("profile",1); ?></a></td></tr><?php } ?>
-	<?php if (($master['doublecheckpassword'] && $master['authbyiponly']) || !$master['authbyiponly']) { ?><tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="chng_passwd.php" class="menu">><?php get_lang("change_pw",1); ?></a></td></tr><?php } ?>
+	<?php if(!ALP_TOURNAMENT_MODE) { ?><tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="change/chng_userinfo.php" class="menu">><?php get_lang("profile",1); ?></a></td></tr><?php } ?>
+	<?php if (($master['doublecheckpassword'] && $master['authbyiponly']) || !$master['authbyiponly']) { ?><tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="change/chng_passwd.php" class="menu">><?php get_lang("change_pw",1); ?></a></td></tr><?php } ?>
 	<tr><td colspan="2" class="sm"><?php get_arrow(); ?>&nbsp;<a href="logout.php" class="menu"><strong>><?php get_lang("logout",1); ?></strong></a></td></tr>
 	</table>
 	<?php
@@ -95,9 +95,9 @@ if (current_security_level() >= 1) { ?>
 	</form>	
 	<?php
 	$menu = array();
-	if ($toggle['techsupport']) { $menu[get_lang("tech_support")] = 'techsupport.php'; }
+	if ($toggle['techsupport']) { $menu[get_lang("tech_support")] = 'techsupport/techsupport.php'; }
 	if ($dbc->queryOne('SELECT count(itemid) FROM lodging')) { $menu[get_lang("cp_lodge")] = 'lodging.php'; }
-	if ($dbc->queryOne('SELECT count(itemid) FROM foodplaces')) { $menu[get_lang("restaurants")] = 'restaurants.php'; }
+	if ($dbc->queryOne('SELECT count(itemid) FROM foodplaces')) { $menu[get_lang("restaurants")] = 'food/restaurants.php'; }
 	if ($toggle['shoutbox']) { $menu[get_lang("shoutbox")] = 'shoutbox.php'; }
 	if ($toggle['policy'] && !empty($master['policyurl'])) { $menu[get_lang("policy")] = $master['policyurl']; }
 	if(sizeof($menu) > 0) {

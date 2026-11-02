@@ -1,5 +1,5 @@
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
-<td width="150"><a href="music.php"><strong>music</strong></a><?php get_go('music.php'); ?></td>
+<td width="150"><a href="media/music.php"><strong>music</strong></a><?php get_go('media/music.php'); ?></td>
 <?php
 global $dbc;
 if ($dbc->queryOne('SELECT playingid FROM music WHERE `nowplaying` = \'1\'') == 0) {
@@ -33,7 +33,7 @@ if ($dbc->queryOne('SELECT playingid FROM music WHERE `nowplaying` = \'1\'') == 
       <td width="22%" align="right" valign="center"><b>Now Playing:</b></td><td width="78%"><?php echo $nowplaying['artist'].' - '.$nowplaying['title']; ?></td>
     </tr>
     <tr class="sm" bgcolor="<?php echo $colors['cell_alternate']; ?>">
-      <td align="right">Requester:</td><td><a href="disp_users.php?id=<?php echo $nowplaying['userid'].'">'.$nowplaying['username']; ?></a></td>
+      <td align="right">Requester:</td><td><a href="display/disp_users.php?id=<?php echo $nowplaying['userid'].'">'.$nowplaying['username']; ?></a></td>
     </tr>
     <tr class="smm" bgcolor="<?php echo $colors['cell_alternate']; ?>">
       <td>&nbsp;</td><td>[votes: <?php echo $nowplaying['votes']; ?>] [plays: <?php echo $nowplaying['plays']; ?>]</td>

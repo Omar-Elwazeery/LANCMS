@@ -1,6 +1,6 @@
 <?php
 // single elimination - 1st through 4th place
-// is included into disp_tournament.php
+// is included into display/disp_tournament.php
 // input: $tournament["ffa"] and $tournament["tourneyid"]
 // output: $first_id, $second_id, $third_id, $fourth_id (ids of the respective placings)
 

@@ -32,7 +32,7 @@ function display_brackets($brackets)
 			<?php 
 			if($i==1) {
 				if(( !ALP_TOURNAMENT_MODE || ALP_TOURNAMENT_MODE_COMPUTER_GAMES ) && tournament_is_secure($tournament['tourneyid'])) { ?>
-					<form action="admin_update_maps.php" method="POST">
+					<form action="admin/admin_update_maps.php" method="POST">
 					<input type="hidden" name="tourneyid" value="<?php echo $tournament["tourneyid"]; ?>">
 					<?php
 				}
@@ -89,14 +89,14 @@ function display_brackets($brackets)
 				}
 				 ?>
 				<td width="170" bgcolor="<?php echo $colors["cell_title"]; ?>"><?php
-				if(!empty($brackets[$i][$j][0])) { ?><nobr><img src="img/pxt.gif" width="6" height="15" border="0" align="absmiddle" alt=""><font class="sm"><?php echo ((current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"]))&&(($brackets[$i][$j][2]>2||$brackets[$i][$j][2]==0||$brackets[$i][$j][2]==-1)&&($tournament["ttype"]==1||$tournament["ttype"]==4||$tournament["ttype"]==5))?"<a href=\"admin_update_tournaments.php?id=".$tournament["tourneyid"]."&act=del&matchid=".$del_matchid["id"]."\"><font color=\"".$colors["alert"]."\" style=\"font-size:7px\"><b>X</b></font></a> ":""); ?><b><?php
+				if(!empty($brackets[$i][$j][0])) { ?><nobr><img src="img/pxt.gif" width="6" height="15" border="0" align="absmiddle" alt=""><font class="sm"><?php echo ((current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"]))&&(($brackets[$i][$j][2]>2||$brackets[$i][$j][2]==0||$brackets[$i][$j][2]==-1)&&($tournament["ttype"]==1||$tournament["ttype"]==4||$tournament["ttype"]==5))?"<a href=\"admin/admin_update_tournaments.php?id=".$tournament["tourneyid"]."&act=del&matchid=".$del_matchid["id"]."\"><font color=\"".$colors["alert"]."\" style=\"font-size:7px\"><b>X</b></font></a> ":""); ?><b><?php
 					if(current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"])) {
 						$max_winnar_round = $dbc->database_fetch_assoc($dbc->database_query("SELECT rnd FROM tournament_matches WHERE tourneyid='".$tournament["tourneyid"]."' AND bracket='w' ORDER BY rnd DESC LIMIT 1"));
 						$max_losar_round = $dbc->database_fetch_assoc($dbc->database_query("SELECT rnd FROM tournament_matches WHERE tourneyid='".$tournament["tourneyid"]."' AND bracket='l' ORDER BY rnd DESC LIMIT 1"));
 						if(($tournament["ttype"]==1&&$brackets[$i][$j][2]==0)||($tournament["ttype"]==4&&$brackets[$i][$j][2]==0)||($tournament["ttype"]==4&&($brackets[$i][$j][2]+1)==$max_losar_round["rnd"]&&$bracketSwitch)||($tournament["ttype"]==5&&$brackets[$i][$j][2]==-1&&$brackets[$i][$j][3]==-1)) {
 							// do nothing
 						} else {
-							echo "<a href=\"admin_update_tournaments.php?id=".$tournament["tourneyid"]."&i=".$brackets[$i][$j][2]."&j=".$brackets[$i][$j][3]."&b=".(!empty($brackets[$i][$j][5])?$brackets[$i][$j][5]:"w")."&w=".$brackets[$i][$j][4].(($tournament["ttype"]==4||$tournament["ttype"]==5)&&(!$bracketSwitch||$brackets[$i][$j][2]==0)?"&L_rnd=".$brackets[$i][$j][6]."&L_mtc=".$brackets[$i][$j][7]."&L_top=".$brackets[$i][$j][8]:"")."\">";
+							echo "<a href=\"admin/admin_update_tournaments.php?id=".$tournament["tourneyid"]."&i=".$brackets[$i][$j][2]."&j=".$brackets[$i][$j][3]."&b=".(!empty($brackets[$i][$j][5])?$brackets[$i][$j][5]:"w")."&w=".$brackets[$i][$j][4].(($tournament["ttype"]==4||$tournament["ttype"]==5)&&(!$bracketSwitch||$brackets[$i][$j][2]==0)?"&L_rnd=".$brackets[$i][$j][6]."&L_mtc=".$brackets[$i][$j][7]."&L_top=".$brackets[$i][$j][8]:"")."\">";
 						}
 					}
 					echo (strlen($brackets[$i][$j][0])>24?substr($brackets[$i][$j][0],0,22)."...":$brackets[$i][$j][0]);
@@ -129,14 +129,14 @@ function display_brackets($brackets)
 						$topscore = $dbc->database_fetch_assoc($dbc->database_query("SELECT score FROM tournament_matches_teams WHERE matchid='".$matchid["id"]."' AND top='1'"));
 						$bottomscore = $dbc->database_fetch_assoc($dbc->database_query("SELECT score FROM tournament_matches_teams WHERE matchid='".$matchid["id"]."' AND top='0'"));
 					}					
-					if($dbc->database_num_rows($servers)||!$tournament["ffa"]) { ?><form action="admin_update_tournaments.php" method="POST"><?php } 
+					if($dbc->database_num_rows($servers)||!$tournament["ffa"]) { ?><form action="admin/admin_update_tournaments.php" method="POST"><?php } 
 					$is_scorevote_entered = $dbc->database_num_rows($dbc->database_query("SELECT * FROM tournament_matches_score_votes WHERE tourneyid='".$tournament["tourneyid"]."' AND matchid='".$matchid["id"]."'")); 
 					$is_matchscore_entered = $dbc->database_num_rows($dbc->database_query("SELECT * FROM tournament_matches_teams WHERE tourneyid='".$tournament["tourneyid"]."' AND matchid='".$matchid["id"]."' AND score IS NOT NULL")); 
 					?><font color="<?php echo $colors["blended_text"]; ?>" style="font-size: 9px"><?php
 					if(!ALP_TOURNAMENT_MODE) {
-						/*?><a href="admin_disp_tournament.php?id=<?php echo $tournament['tourneyid']; ?>&rnd=<?php echo ($matchid['rnd']==0&&isset($matchid['rnd'])?'0':($brackets[$i][$j][5]=='l'?($matchid['rnd']+1):$matchid['rnd'])); ?>"><img src="img/info.gif" width="10" height="8" border="0" alt="administrate"></a><?php spacer(3,1); */?><a href="javascript:newWindow('admin_disp_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $matchid["id"]; ?>','300','180','score')"><?php echo ($is_matchscore_entered?"<font color=\"".$colors["cell_title"]."\">":($is_scorevote_entered?"<font color=\"".$colors["primary"]."\">":"")); ?><font style="text-decoration: none;"><?php if(is_score_discrep($tournament['tourneyid'],$matchid['id'])&&all_scores_submitted($tournament['tourneyid'],$matchid['id'])) { echo "&lt;"; } ?><img src="img/scores.gif" width="10" height="8" border="0" alt="submitted scores"><?php if(is_score_discrep($tournament['tourneyid'],$matchid['id'])&&all_scores_submitted($tournament['tourneyid'],$matchid['id'])) { echo "&lt;"; } ?></font><?php echo ($is_matchscore_entered||$is_scorevote_entered?"</font>":""); ?></a>&nbsp;&nbsp;<?php
+						/*?><a href="admin/admin_disp_tournament.php?id=<?php echo $tournament['tourneyid']; ?>&rnd=<?php echo ($matchid['rnd']==0&&isset($matchid['rnd'])?'0':($brackets[$i][$j][5]=='l'?($matchid['rnd']+1):$matchid['rnd'])); ?>"><img src="img/info.gif" width="10" height="8" border="0" alt="administrate"></a><?php spacer(3,1); */?><a href="javascript:newWindow('admin/admin_disp_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $matchid["id"]; ?>','300','180','score')"><?php echo ($is_matchscore_entered?"<font color=\"".$colors["cell_title"]."\">":($is_scorevote_entered?"<font color=\"".$colors["primary"]."\">":"")); ?><font style="text-decoration: none;"><?php if(is_score_discrep($tournament['tourneyid'],$matchid['id'])&&all_scores_submitted($tournament['tourneyid'],$matchid['id'])) { echo "&lt;"; } ?><img src="img/scores.gif" width="10" height="8" border="0" alt="submitted scores"><?php if(is_score_discrep($tournament['tourneyid'],$matchid['id'])&&all_scores_submitted($tournament['tourneyid'],$matchid['id'])) { echo "&lt;"; } ?></font><?php echo ($is_matchscore_entered||$is_scorevote_entered?"</font>":""); ?></a>&nbsp;&nbsp;<?php
 					}	
-					if($tournament["ffa"]) { ?><a href="javascript:newWindow('admin_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&i=<?php echo $brackets[$i][$j][2]; ?>&j=<?php echo $brackets[$i][$j][3]; ?>&matchid=<?php echo $matchid["id"]; ?>','200','180','scores')">scores</a>&nbsp;<?php }
+					if($tournament["ffa"]) { ?><a href="javascript:newWindow('admin/admin_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&i=<?php echo $brackets[$i][$j][2]; ?>&j=<?php echo $brackets[$i][$j][3]; ?>&matchid=<?php echo $matchid["id"]; ?>','200','180','scores')">scores</a>&nbsp;<?php }
 					if($dbc->database_num_rows($servers)||!$tournament["ffa"]) { ?>
 						<input type="hidden" name="id" value="<?php echo $tournament["tourneyid"]; ?>"><input type="hidden" name="b" value="<?php echo $brackets[$i][$j][5]; ?>"><input type="hidden" name="i" value="<?php echo $brackets[$i][$j][2]; ?>"><input type="hidden" name="j" value="<?php echo $brackets[$i][$j][3]; ?>"><input type="hidden" name="matchid" value="<?php echo $matchid["id"]; ?>"><?php 
 						if(($tournament["ttype"]==4||$tournament["ttype"]==5)&&!$bracketSwitch) { ?><input type="hidden" name="L_rnd" value="<?php echo $brackets[$i][$j][6]; ?>"><input type="hidden" name="L_mtc" value="<?php echo $brackets[$i][$j][7]; ?>"><input type="hidden" name="L_top" value="<?php echo $brackets[$i][$j][8]; ?>"><?php }
@@ -189,7 +189,7 @@ function display_brackets($brackets)
 					}
 					if($is_captain_of_match&&$no_winner) { 
 						$is_scorevote_entered = $dbc->database_num_rows($dbc->database_query("SELECT * FROM tournament_matches_score_votes WHERE tourneyid='".$tournament["tourneyid"]."' AND matchid='".$matchid["id"]."' AND userid='".$_COOKIE["userid"]."'")); ?>
-						<font class="sm"><a href="javascript:newWindow('chng_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $matchid["id"]; ?>&i=<?php echo $brackets[$i][$j][2]; ?>&j=<?php echo $brackets[$i][$j][3]; ?>&b=<?php echo $brackets[$i][$j][5]; ?><?php if(!empty($brackets[$i][$j][6])&&!empty($brackets[$i][$j][7])&&!empty($brackets[$i][$j][8])) { ?>&L_rnd=<?php echo $brackets[$i][$j][6]; ?>&L_mtc=<?php echo $brackets[$i][$j][7]; ?>&L_top=<?php echo $brackets[$i][$j][8]; ?><?php } ?>','200','180','score')"><?php echo ($is_scorevote_entered?"<font color=\"".$colors["blended_text"]."\">":""); ?><b>submit score</b><?php echo ($is_scorevote_entered?"</font>":""); ?></a></font><br />
+						<font class="sm"><a href="javascript:newWindow('change/chng_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $matchid["id"]; ?>&i=<?php echo $brackets[$i][$j][2]; ?>&j=<?php echo $brackets[$i][$j][3]; ?>&b=<?php echo $brackets[$i][$j][5]; ?><?php if(!empty($brackets[$i][$j][6])&&!empty($brackets[$i][$j][7])&&!empty($brackets[$i][$j][8])) { ?>&L_rnd=<?php echo $brackets[$i][$j][6]; ?>&L_mtc=<?php echo $brackets[$i][$j][7]; ?>&L_top=<?php echo $brackets[$i][$j][8]; ?><?php } ?>','200','180','score')"><?php echo ($is_scorevote_entered?"<font color=\"".$colors["blended_text"]."\">":""); ?><b>submit score</b><?php echo ($is_scorevote_entered?"</font>":""); ?></a></font><br />
 						<?php
 					} else {
 						if($bracketSwitch) {

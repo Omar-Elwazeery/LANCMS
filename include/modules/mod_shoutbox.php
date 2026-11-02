@@ -16,7 +16,7 @@ if ($dbc->database_num_rows($data)) {
 		$user = $dbc->queryOne('SELECT username FROM users WHERE userid='.(int)$row['userid']); 
 		?>
 		<tr>
-                        <td><span class="sm"><a href="disp_users.php?id=<?php echo $row['userid']; ?>"><strong><?php echo $user; ?></strong></a>
+                        <td><span class="sm"><a href="display/disp_users.php?id=<?php echo $row['userid']; ?>"><strong><?php echo $user; ?></strong></a>
                                 <font color="<?php echo $colors['blended_text']; ?>"> at <?php echo disp_datetime(strtotime($row['itemtime']), 0); ?></font><br />
 		<?php 
         $magicquotes = ini_get('magic_quotes_gpc');

@@ -41,11 +41,11 @@ if(sizeof($temp)>0) {
 		} elseif($key == "mod_schedule") {
 			if($toggle["schedule"]) $modules->add_module("schedule",$modulelistitem[0],0, get_lang("schedule_hour"),0,"",$modulelistitem[1]);
 		} elseif($key == "mod_tournaments" && !ALP_TOURNAMENT_MODE) {
-			$modules->add_module("tournaments",$modulelistitem[0], 0, get_lang("tournaments"),0,"tournaments.php",$modulelistitem[1]);
+			$modules->add_module("tournaments",$modulelistitem[0], 0, get_lang("tournaments"),0,"game/tournaments.php",$modulelistitem[1]);
 		} elseif($key == "mod_polls" && !ALP_TOURNAMENT_MODE) {
 			if($dbc->database_num_rows($dbc->database_query("SELECT * FROM poll"))) {
 				// only display module if there are polls in the database.
-				$modules->add_module("polls",$modulelistitem[0],$master['pollsguest']?0:1,get_lang("polls"),0,"polls.php",$modulelistitem[1]);
+				$modules->add_module("polls",$modulelistitem[0],$master['pollsguest']?0:1,get_lang("polls"),0,"game/polls.php",$modulelistitem[1]);
 			}
 		} elseif($key == 'mod_news' && $dbc->database_num_rows($dbc->database_query("SELECT * FROM news WHERE hide_item=0"))) {
 			$modules->add_module("news",$modulelistitem[0], 0, get_lang("announcements"),0,'',$modulelistitem[1]);

@@ -6,8 +6,8 @@ $matches = $dbc->database_query("SELECT * FROM tournament_matches WHERE tourneyi
  ?>
 <div class="centerd" style="padding: 4px 2px 4px 4px; width: 420px; border: 1px dotted <?php echo $colors['primary']; ?>">
 <strong>options</strong>: 
-<form action="admin_generic.php" method="POST" style="display: inline">
-	<input type="hidden" name="ref" value="<?php echo basename(get_script_name()).'?id='.$tournament['tourneyid']; ?>">
+<form action="admin/admin_generic.php" method="POST" style="display: inline">
+	<input type="hidden" name="ref" value="<?php echo lancms_page_path().'?id='.$tournament['tourneyid']; ?>">
 	<input type="hidden" name="case" value="boiloff_<?php echo ($tournament['lockfinish'] ? 'un':''); ?>finished">
 	<input type="hidden" name="tourneyid" value="<?php echo $tournament['tourneyid']; ?>">
 	<input type="submit" name="submit" value="<?php echo ($tournament['lockfinish'] ? 'toggle unfinished?' : 'toggle finished?'); ?>" class="formcolors2">
@@ -49,7 +49,7 @@ while($row = $dbc->database_fetch_assoc($matches)) { ?>
 	if((!ALP_TOURNAMENT_MODE || ALP_TOURNAMENT_MODE_COMPUTER_GAMES) && (!empty($row["map"]) || tournament_is_secure($tournament['tourneyid']))) { ?>
 		<tr><td colspan="<?php echo $colspan; ?>">map: <?php echo $row["map"];
 		if(tournament_is_secure($tournament['tourneyid'])) { 
-			?>&nbsp;<a href="javascript:newWindow('admin_update_maplist.php?id=<?php echo $tournament["tourneyid"]; ?>','200','180','maplist')"><b>modify maps</b>.</a><?php 
+			?>&nbsp;<a href="javascript:newWindow('admin/admin_update_maplist.php?id=<?php echo $tournament["tourneyid"]; ?>','200','180','maplist')"><b>modify maps</b>.</a><?php 
 		} ?></td></tr>
 		<?php
 	}
@@ -63,9 +63,9 @@ while($row = $dbc->database_fetch_assoc($matches)) { ?>
 	while($teaminfo = $dbc->database_fetch_assoc($data)) { 
 		?>
 		<tr<?php echo ($counter%2==1?" bgcolor=\"".$colors['cell_alternate']."\"":''); ?>>
-			<td valign="top"><?php echo ((current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"]))?"<a href=\"admin_update_tournaments.php?id=".$tournament["tourneyid"]."&matchid=".$row["id"]."&w=".$teaminfo['team']."\"><b>":"").$teaminfo["name"].(current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"])?"</b></a>":""); 
+			<td valign="top"><?php echo ((current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"]))?"<a href=\"admin/admin_update_tournaments.php?id=".$tournament["tourneyid"]."&matchid=".$row["id"]."&w=".$teaminfo['team']."\"><b>":"").$teaminfo["name"].(current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"])?"</b></a>":""); 
 					if($row['rnd']!=1&&(current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"]))) { 
-						?>&nbsp;&nbsp;<a href="admin_update_tournaments.php?id=<?php echo $tournament["tourneyid"]; ?>&act=del&matchid=<?php echo $row["id"]; ?>&team=<?php echo $teaminfo['team']; ?>"><font color="<?php echo $colors["alert"]; ?>" style="font-size:7px"><b>X</b></font></a><?php 
+						?>&nbsp;&nbsp;<a href="admin/admin_update_tournaments.php?id=<?php echo $tournament["tourneyid"]; ?>&act=del&matchid=<?php echo $row["id"]; ?>&team=<?php echo $teaminfo['team']; ?>"><font color="<?php echo $colors["alert"]; ?>" style="font-size:7px"><b>X</b></font></a><?php 
 					} ?></div></td>
 			<td valign="top"><div align="center"><?php 
 				$nextmatch = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM tournament_matches WHERE tourneyid='".$tournament['tourneyid']."' AND rnd='".($row['rnd']+1)."'"));
@@ -76,7 +76,7 @@ while($row = $dbc->database_fetch_assoc($matches)) { ?>
 				} ?></div></td>
 			<td valign="top" class="sm"><div align="center"><b><?php 
 			if(current_security_level()>=2||(current_security_level()>=1&&$tournament["moderatorid"]==$_COOKIE["userid"])) { 
-				?><form action="admin_update_tournaments.php" method="POST"><input type="hidden" name="id" value="<?php echo $tournament["tourneyid"]; ?>"><input type="hidden" name="matchid" value="<?php echo $teaminfo["id"]; ?>"><img src="img/leftarrow.gif" width="5" height="8" border="0" alt="only score"><input type="text" name="onlyscore" maxlength="20" style="font-size: 9px; width: 14px;" value="<?php echo (isset($teaminfo["score"])?$teaminfo["score"]:""); ?>"><input type="submit" value="+" style="font-size: 7px"><?php
+				?><form action="admin/admin_update_tournaments.php" method="POST"><input type="hidden" name="id" value="<?php echo $tournament["tourneyid"]; ?>"><input type="hidden" name="matchid" value="<?php echo $teaminfo["id"]; ?>"><img src="img/leftarrow.gif" width="5" height="8" border="0" alt="only score"><input type="text" name="onlyscore" maxlength="20" style="font-size: 9px; width: 14px;" value="<?php echo (isset($teaminfo["score"])?$teaminfo["score"]:""); ?>"><input type="submit" value="+" style="font-size: 7px"><?php
 			} else {
 				if(!empty($teaminfo['score'])) echo "[ ".$teaminfo["score"]." ]";
 				else echo "&nbsp;";
@@ -94,7 +94,7 @@ while($row = $dbc->database_fetch_assoc($matches)) { ?>
 						$colorholder = $colors["primary"];
 					} 
 					if(!ALP_TOURNAMENT_MODE) { 
-						?><a href="admin_disp_tournament.php?id=<?php echo $tournament['tourneyid']; ?>&rnd=<?php echo $row['rnd']; ?>"><img src="img/info.gif" width="10" height="8" border="0" alt="administrate"></a><?php spacer(3,1); ?><a href="javascript:newWindow('admin_disp_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $row["id"]; ?>','300','180','score')"><font style="text-decoration: none;"><?php echo ($is_scorevote_entered?"<font color=\"".$colorholder."\">":""); ?><?php if(is_score_discrep($tournament['tourneyid'],$row['id'])&&all_scores_submitted($tournament['tourneyid'],$row['id'])) { echo "&lt;"; } ?><img src="img/scores.gif" width="10" height="8" border="0" alt="submitted scores"><?php if(is_score_discrep($tournament['tourneyid'],$row['id'])&&all_scores_submitted($tournament['tourneyid'],$row['id'])) { echo "&gt;"; } ?><?php echo ($is_scorevote_entered?"</font>":""); ?></font></a><?php
+						?><a href="admin/admin_disp_tournament.php?id=<?php echo $tournament['tourneyid']; ?>&rnd=<?php echo $row['rnd']; ?>"><img src="img/info.gif" width="10" height="8" border="0" alt="administrate"></a><?php spacer(3,1); ?><a href="javascript:newWindow('admin/admin_disp_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $row["id"]; ?>','300','180','score')"><font style="text-decoration: none;"><?php echo ($is_scorevote_entered?"<font color=\"".$colorholder."\">":""); ?><?php if(is_score_discrep($tournament['tourneyid'],$row['id'])&&all_scores_submitted($tournament['tourneyid'],$row['id'])) { echo "&lt;"; } ?><img src="img/scores.gif" width="10" height="8" border="0" alt="submitted scores"><?php if(is_score_discrep($tournament['tourneyid'],$row['id'])&&all_scores_submitted($tournament['tourneyid'],$row['id'])) { echo "&gt;"; } ?><?php echo ($is_scorevote_entered?"</font>":""); ?></font></a><?php
 					}
 				} elseif(current_security_level()==1&&$tournament["moderatorid"]!=$_COOKIE["userid"]) {
 					if($tournament["per_team"]>1) {
@@ -114,7 +114,7 @@ while($row = $dbc->database_fetch_assoc($matches)) { ?>
 					$no_winner = no_winner($tournament['tourneyid'],$row['id']);
 					if($bool && $no_winner) { 
 						$is_scorevote_entered = $dbc->database_num_rows($dbc->database_query("SELECT * FROM tournament_matches_score_votes WHERE tourneyid='".$tournament["tourneyid"]."' AND matchid='".$row["id"]."' AND userid='".$_COOKIE["userid"]."'")); ?>
-						<a href="javascript:newWindow('chng_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $row["id"]; ?>','200','180','score')"><?php echo ($is_scorevote_entered?"<font color=\"".$colors["blended_text"]."\">":""); ?><b>submit score</b><?php echo ($is_scorevote_entered?"</font>":""); ?></a>
+						<a href="javascript:newWindow('change/chng_update_scores.php?id=<?php echo $tournament["tourneyid"]; ?>&matchid=<?php echo $row["id"]; ?>','200','180','score')"><?php echo ($is_scorevote_entered?"<font color=\"".$colors["blended_text"]."\">":""); ?><b>submit score</b><?php echo ($is_scorevote_entered?"</font>":""); ?></a>
 						<?php
 					}
 				}

@@ -3,7 +3,7 @@ require_once 'include/_universal.php';
 $x = new universal('','',0);
 if ($x->is_secure()) { 
 	if(ALP_TOURNAMENT_MODE) {
-		header('Location: tournaments.php');
+		header('Location: game/tournaments.php');
 	} else {
 		$x->display_top(0);
 		function index_modules($side)
@@ -64,7 +64,7 @@ if ($x->is_secure()) {
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
 						<td><font color="<?php echo $colors['primary']; ?>"><strong><?php echo $behrow['headline']; ?></strong><br /></font></td>
-						<td><div align="right"><font class="sm"><font color="<?php echo $colors['blended_text']; ?>">[<strong><?php echo $user['username']; ?></strong>]	[<?php echo (!empty($behrow['itemtime']) ? disp_datetime(strtotime($behrow['itemtime'])) : 'Invalid Date'); ?>]</font><?php adminlink('admin_news.php?mod=1&q='.$behrow['itemid']); ?><br /></font></div></td>
+						<td><div align="right"><font class="sm"><font color="<?php echo $colors['blended_text']; ?>">[<strong><?php echo $user['username']; ?></strong>]	[<?php echo (!empty($behrow['itemtime']) ? disp_datetime(strtotime($behrow['itemtime'])) : 'Invalid Date'); ?>]</font><?php adminlink('admin/admin_news.php?mod=1&q='.$behrow['itemid']); ?><br /></font></div></td>
 					</tr>
 					<tr><td colspan="2">
 					<?php
@@ -98,7 +98,7 @@ if ($x->is_secure()) {
 				<?php
 				if($toggle['prizes']) { 
 					echo $l_counter; 
-					?>. Make sure you <a href="chng_prizes.php">register for prizes</a>.  Read the guide on the page to decide which method of registration you want to use.<br />
+					?>. Make sure you <a href="change/chng_prizes.php">register for prizes</a>.  Read the guide on the page to decide which method of registration you want to use.<br />
 					<br /><?php
 					$l_counter++;
 				}
@@ -114,14 +114,14 @@ if ($x->is_secure()) {
 				if($toggle['caffeine'] || $toggle['marath'] || $toggle['benchmarks']) {
 						spacer(1,4,1);
 						if($toggle['caffeine']) { 
-							spacer(16); get_arrow(); ?>&nbsp;<a href="caffeine.php">Caffeine Log</a><br /><?php
+							spacer(16); get_arrow(); ?>&nbsp;<a href="game/caffeine.php">Caffeine Log</a><br /><?php
 						}
 						if($toggle['marath']) {
-							spacer(16); get_arrow(); ?>&nbsp;<a href="themarathon.php">The Marathon Global Tournament</a><br /><?php
+							spacer(16); get_arrow(); ?>&nbsp;<a href="game/themarathon.php">The Marathon Global Tournament</a><br /><?php
 						}
-						spacer(16); get_arrow(); ?>&nbsp;<a href="tournaments.php">Tournaments</a><br /><?php
+						spacer(16); get_arrow(); ?>&nbsp;<a href="game/tournaments.php">Tournaments</a><br /><?php
 						if($toggle['benchmarks']) {
-							spacer(16); get_arrow(); ?>&nbsp;<a href="benchmarks.php">Benchmarking Competition</a><br /><?php
+							spacer(16); get_arrow(); ?>&nbsp;<a href="game/benchmarks.php">Benchmarking Competition</a><br /><?php
 						}
 					$l_counter++;
 				}
@@ -136,7 +136,7 @@ if ($x->is_secure()) {
 					//$default_news = nl2br($default_news);
 					?>
 					<br />
-					<strong>source</strong>: (copy this into the <a href="admin_news.php">administrator news page</a> to save this post)<br />
+					<strong>source</strong>: (copy this into the <a href="admin/admin_news.php">administrator news page</a> to save this post)<br />
 					<div style="border: 1px dashed <?php echo $colors['blended_text']; ?>; margin: 4px 4px 4px 4px; padding: 4px 4px 4px 4px; font: 11px 'Courier New';"><?php echo $default_news; ?></span>
 					<?php
 				}

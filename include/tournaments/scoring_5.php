@@ -1,6 +1,6 @@
 <?php
 // double elimination - 1st through 4th place
-// is included into disp_tournament.php
+// is included into display/disp_tournament.php
 // input: $tournament["tourneyid"]
 // output: $first_id, $second_id, $third_id, $fourth_id (ids of the respective placings)
 $interbracket_match = $dbc->database_fetch_assoc($dbc->database_query("SELECT id FROM tournament_matches WHERE tourneyid='".$tournament["tourneyid"]."' AND bracket='l' AND rnd='0' and mtc='0'"));

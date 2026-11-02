@@ -1,4 +1,5 @@
-<html><head><title><?php echo $lan['name']; ?> - caffeine competition</title>
+<html><head>
+<base href="<?php echo htmlspecialchars(lancms_base_url(), ENT_QUOTES); ?>" /><title><?php echo $lan['name']; ?> - caffeine competition</title>
 <style type="text/css" media="all">
 	<?php include_once($master['currentskin'].'x.css.php'); ?>
 </style>

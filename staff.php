@@ -9,8 +9,8 @@ if($toggle['staff']&&$x->is_secure()) { ?>
     <b>staff</b>: <br />
     <br />
     <?php
-    $x->add_related_link('add/modify staff details','admin_staff.php',2);
-    $x->add_related_link('add/modify staff fields','chng_staff.php',2);
+    $x->add_related_link('add/modify staff details','admin/admin_staff.php',2);
+    $x->add_related_link('add/modify staff fields','change/chng_staff.php',2);
     $x->display_related_links();
     
     $data = $dbc->database_query("SELECT us.id,us.userid,u.username,us.staffid,s.name,us.data,s.enabled,s.priority FROM users_staff AS us LEFT JOIN users AS u USING(userid) LEFT JOIN staff AS s ON us.staffid = s.staffid WHERE s.enabled='1' ORDER BY u.username, s.priority");
@@ -49,7 +49,7 @@ if($toggle['staff']&&$x->is_secure()) { ?>
             echo "&nbsp;";
         }
         ?></P>
-        <TD bgcolor="<?php echo $colors['cell_title']; ?>" ALIGN="RIGHT" VALIGN="TOP"><A HREF="disp_users.php?id=<?php echo $staff_id; ?>"><?php echo $staffnames[$staff_id]; ?></A></TD>
+        <TD bgcolor="<?php echo $colors['cell_title']; ?>" ALIGN="RIGHT" VALIGN="TOP"><A HREF="display/disp_users.php?id=<?php echo $staff_id; ?>"><?php echo $staffnames[$staff_id]; ?></A></TD>
   </TR>
   <TR>
         <TD bgcolor="<?php echo $colors['cell_title']; ?>" ALIGN="LEFT" VALIGN="TOP"> 

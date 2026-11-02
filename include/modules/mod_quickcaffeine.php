@@ -1,4 +1,4 @@
-<form action="caffeine.php" method="POST" name="caffeine">
+<form action="game/caffeine.php" method="POST" name="caffeine">
 <input type="hidden" name="type" value="quickadd" />
 <input type="hidden" name="quantity" value="1" />
 <font class="sm"><b>quick caffeine</b>:<br /></font>
@@ -11,4 +11,4 @@ while($row = $dbc->database_fetch_assoc($data)) {
 } ?>
 </select>
 &nbsp;amount:<input type="text" value="12" size="1" maxlength="3" name="oz" /><input type="radio" name="oztype" value="0" checked class="radio" /> oz <input type="radio" value="1" name="oztype" class="radio" /> L&nbsp;<input type="submit" value="add" style="font-size: 10px" class="formcolors" />
-</form><div align="right"><font class="sm">[<a href="caffeine.php"><b>go to caffeine log</b></a>]</font></div>
+</form><div align="right"><font class="sm">[<a href="game/caffeine.php"><b>go to caffeine log</b></a>]</font></div>

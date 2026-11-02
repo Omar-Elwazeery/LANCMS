@@ -10,7 +10,7 @@ if (current_security_level() >= 1 || $master['pollsguest']) {
 		$newtemp = $dbc->database_query('SELECT * from poll_votes where userid='.(int)$_COOKIE['userid'].' AND pollid='.(int)$rowtemp['pollid']);
 		if ($dbc->database_num_rows($newtemp) == 0 && current_security_level() >= 1) { ?>
 			<font size="1"><br /></font>
-			<form action="chng_vote.php" method="post">
+			<form action="change/chng_vote.php" method="post">
 			<input type="hidden" name="pollid" value="<?php echo $rowtemp['pollid']; ?>" />
 			<?php 
 			for ($i = 1; $i <= 15; $i++) {
@@ -52,14 +52,14 @@ if (current_security_level() >= 1 || $master['pollsguest']) {
 		}
 		?>
 		<br />
-		<div align="right"><font size="1">[<a href="polls.php">view all opinion polls</a>]</font></div>
+		<div align="right"><font size="1">[<a href="game/polls.php">view all opinion polls</a>]</font></div>
 		<?php
 	} elseif($dbc->database_num_rows($othertemp)>0) {
 		$blarg = $dbc->database_query('SELECT * FROM poll'); 
 		$counter = 0;
 		while($blargy = $dbc->database_fetch_assoc($blarg)) { 
 			if(!$dbc->database_num_rows($dbc->database_query('SELECT * FROM poll_votes WHERE pollid='.(int)$blargy['pollid'].' AND userid='.(int)$_COOKIE['userid']))) { ?>
-				<font class="sm"><?php get_arrow(); ?>&nbsp;<a href="polls.php#POLL<?php echo $blargy['pollid']; ?>"><?php echo $blargy['headline']; ?></a><br /></font>
+				<font class="sm"><?php get_arrow(); ?>&nbsp;<a href="game/polls.php#POLL<?php echo $blargy['pollid']; ?>"><?php echo $blargy['headline']; ?></a><br /></font>
 				<?php
 				$counter++;
 			}
@@ -69,7 +69,7 @@ if (current_security_level() >= 1 || $master['pollsguest']) {
 			<?php
 		} ?>
 		<br />
-		<div align="right"><font class="sm">[<a href="polls.php"><b>view all</b></a>]</font></div>
+		<div align="right"><font class="sm">[<a href="game/polls.php"><b>view all</b></a>]</font></div>
 		<?php
 	}
 } 

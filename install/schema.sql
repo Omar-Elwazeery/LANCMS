@@ -737,7 +737,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- ---------------------------------------------------------------------------
 -- pid: process-id registry used by the satellite listener (clientlisten.php /
--- admin_satellite.php): INSERT INTO pid VALUES('clientlisten', <pid>)
+-- admin/admin_satellite.php): INSERT INTO pid VALUES('clientlisten', <pid>)
 -- (added after the first schema pass missed it)
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pid` (

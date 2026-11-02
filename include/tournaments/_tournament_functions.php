@@ -60,7 +60,7 @@ function make_tournament_link($tourneyid)
 	if (current_security_level() < 2 && file_exists('_tournament_'.$tourneyid.'.html')) {
 		return '_tournament_'.$tourneyid.'.html';
 	} else {
-		return 'disp_tournament.php?id='.$tourneyid;
+		return 'display/disp_tournament.php?id='.$tourneyid;
 	}	
 }
 
@@ -81,10 +81,10 @@ function display_tournament_menu($tourneyid,$double_br=1,$extra_admin=0) {
 	$link = make_tournament_link($tourneyid);
 	$tournament = $dbc->database_fetch_assoc($dbc->database_query("SELECT * FROM tournaments WHERE tourneyid='".$tourneyid."'"));
 	get_arrow();
-	?>&nbsp;<a href="tournaments.php?id=<?php echo $tourneyid; ?>" class="menu"><strong>information</strong></a>
-	<?php get_arrow(); ?>&nbsp;<a href="disp_teams.php?id=<?php echo $tourneyid; ?>" class="menu"><?php echo $txt; ?></a> <?php
+	?>&nbsp;<a href="game/tournaments.php?id=<?php echo $tourneyid; ?>" class="menu"><strong>information</strong></a>
+	<?php get_arrow(); ?>&nbsp;<a href="display/disp_teams.php?id=<?php echo $tourneyid; ?>" class="menu"><?php echo $txt; ?></a> <?php
 	if($extra_admin && current_security_level()>=2 && !$tournament['lockstart']) {
-		?>[ <a href="admin_teams.php?show=<?php echo $tourneyid; ?>" class="menu">add</a> | <a href="admin_teams_delete.php?show=<?php echo $tourneyid; ?>" class="menu">del</a> ]<?php
+		?>[ <a href="admin/admin_teams.php?show=<?php echo $tourneyid; ?>" class="menu">add</a> | <a href="admin/admin_teams_delete.php?show=<?php echo $tourneyid; ?>" class="menu">del</a> ]<?php
 	} ?>
 	<?php get_arrow(); ?>&nbsp;<?php 
 	if ($tournament['lockstart']) { 
@@ -101,14 +101,14 @@ function display_tournament_menu($tourneyid,$double_br=1,$extra_admin=0) {
 	<?php 
 	$mapvote = $dbc->database_num_rows($dbc->database_query('SELECT * FROM poll_maps WHERE tourneyid='.(int)$tourneyid.' AND selected=1'));
 	if ($mapvote) { ?>
-		<?php get_arrow(); ?>&nbsp;<a href="maps.php?id=<?php echo $tourneyid; ?>" class="menu">maps</a><?php 
+		<?php get_arrow(); ?>&nbsp;<a href="game/maps.php?id=<?php echo $tourneyid; ?>" class="menu">maps</a><?php 
 	}
 	
 	/*Disable admin_disp_tournaments for now
 	if(tournament_is_secure($tourneyid) && !ALP_TOURNAMENT_MODE) { ?>
 		<?php get_arrow(); ?>&nbsp;<?php 
 		if ($tournament['lockstart']) { 
-			?><a href="admin_disp_tournament.php?id=<?php echo $tourneyid; ?>" class="menu"><?php 
+			?><a href="admin/admin_disp_tournament.php?id=<?php echo $tourneyid; ?>" class="menu"><?php 
 		} else { 
 			?><font style="color: <?php echo $colors['blended_text']; ?>"><?php 
 		} 
@@ -121,7 +121,7 @@ function display_tournament_menu($tourneyid,$double_br=1,$extra_admin=0) {
 	}
 	*/
 	if ($extra_admin && current_security_level()>=2 && !$tournament['lockstart']) { ?>
-		<?php get_arrow(); ?>&nbsp;<a href="admin_seeding.php?show=<?php echo $tourneyid; ?>" class="menu">seeding</a>
+		<?php get_arrow(); ?>&nbsp;<a href="admin/admin_seeding.php?show=<?php echo $tourneyid; ?>" class="menu">seeding</a>
 		<?php 
 	}
 	?><br /><?php 

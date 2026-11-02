@@ -15,7 +15,7 @@ if ($x->is_secure() && $toggle['messaging']) {
 ?> 
 <table border="0">
 <tbody>
-	<tr><td>Sender</td><td><a href="disp_users.php?id=<?php print $row['from_userid']; ?>"><?php print $row['username']; ?></a></td></tr>
+	<tr><td>Sender</td><td><a href="display/disp_users.php?id=<?php print $row['from_userid']; ?>"><?php print $row['username']; ?></a></td></tr>
 	<tr><td>Subject</td><td><?php print $row['subject']; ?></td></tr>
 	<tr><td>Time</td><td><?php print $row['time_stamp']; ?></td></tr>
 	<tr><td colspan="2">Message</td></tr>
@@ -74,7 +74,7 @@ i?>the requested message is not available or it may not exist.<?php
 		<td><input type="checkbox" name="message-<?php print $row['messageid']; ?>" /></td>
 		<td><?php print $row['time_stamp']; ?></td>
 		<td><a href="messaging.php?messageid=<?php print $row['messageid']; ?>"><?php print $row['subject']; ?></a></td>
-		<td><a href="disp_users.php?id=<?php print $row['from_userid']; ?>"><?php print $row['username']; ?></a></td>
+		<td><a href="display/disp_users.php?id=<?php print $row['from_userid']; ?>"><?php print $row['username']; ?></a></td>
 	</tr>
 <?                	
                 			$counter++;

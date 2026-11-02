@@ -40,12 +40,25 @@ in `php.ini` if you allow large uploads. Many features (pizza, benchmarks, seati
 
 | Path | Purpose |
 |---|---|
-| `*.php` | public pages; `admin_*.php` and `chng_*.php` are admin / edit pages |
+| `index.php`, `login.php`, `register.php`, `users.php`, ... | core pages that stay in the root |
+| `admin/` | administration pages (`admin_*.php`) |
+| `game/` | tournaments, servers, maps, polls, caffeine log, benchmarks, game requests |
+| `change/` | forms where users edit their own data (`chng_*.php`) |
+| `display/` | read-only listings (`disp_*.php`) |
+| `seating/` | seating map and its image generators |
+| `food/` | pizza orders, food runs, restaurants |
+| `media/` | music, shared files, uploads, map previews |
+| `techsupport/` | tech-support tickets |
 | `include/` | core classes (`cl_*`), database drivers (`genesis_*`), modules, tournament engines, language files |
-| `include/_compat.php` | compatibility layer for removed PHP features and request-input escaping (see below) |
+| `include/_compat.php` | compatibility layer for removed PHP features, input escaping and password helpers |
 | `online/` | optional pre-registration website; shares the main database and `_config.php` |
-| `skins/` | themes |
+| `skins/`, `img/` | themes and images |
 | `install/` | installer and SQL; remove after installing |
+| `files/`, `music/mp3s/` | user uploads (writable) |
+
+Every page in a sub-folder starts with `chdir(dirname(__DIR__))`, so all includes and file paths stay relative
+to the project root, and the page header emits a `<base href>` so existing relative links keep working. When
+adding a page, put it in the matching folder, start it the same way, and register it in `include/structuretree.php`.
 
 ## Differences from the original ALP
 

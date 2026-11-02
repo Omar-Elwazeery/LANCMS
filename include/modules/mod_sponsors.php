@@ -6,7 +6,7 @@ if ($master['sponsors_index_limit'] != 0) {
 	$holder = '';
 }
 $data = $dbc->query('SELECT * FROM sponsors ORDER BY priority, id '.$holder); ?>
-<a href="disp_sponsors.php"><strong>event sponsors</strong></a><?php get_go('disp_sponsors.php'); ?><br />
+<a href="display/disp_sponsors.php"><strong>event sponsors</strong></a><?php get_go('display/disp_sponsors.php'); ?><br />
 <?php
 if ($data->numRows()) {
 	spacer(1,4,1); ?>

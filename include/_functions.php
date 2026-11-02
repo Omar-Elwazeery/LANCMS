@@ -24,7 +24,7 @@ $master		= $dbc->database_fetch_assoc($dbc->database_query('SELECT * FROM master
 $toggle		= $dbc->database_fetch_assoc($dbc->database_query('SELECT * FROM toggle'));
 $lan		= $dbc->database_fetch_assoc($dbc->database_query('SELECT * FROM config'));
 $language 	= $master['currentlanguage'];
-$country 	= $lan['country']; //only used in restaurants.php for mapquest links.
+$country 	= $lan['country']; //only used in food/restaurants.php for mapquest links.
 
 //Set $userinfo variable
 $userinfo = $dbc->queryRow("SELECT * FROM users WHERE BINARY username=".(!empty($_COOKIE['username'])?$dbc->quote($_COOKIE['username']):"''")." AND sesid<>'' AND sesid=".(!empty($_COOKIE['sesid'])?$dbc->quote($_COOKIE['sesid']):"''")." AND userid=".(ctype_digit($_COOKIE['userid'])?$_COOKIE['userid']:"''"));
@@ -128,14 +128,14 @@ function cp_menu()
 	$menu = array();
 	if(current_security_level()>=1) {
 		if(!ALP_TOURNAMENT_MODE) {
-			$menu[] = array($userinfo["username"],"disp_users.php?id=".$userinfo['userid']);
-			$menu[] = array(get_lang("profile"),"chng_userinfo.php");
+			$menu[] = array($userinfo["username"],"display/disp_users.php?id=".$userinfo['userid']);
+			$menu[] = array(get_lang("profile"),"change/chng_userinfo.php");
 			if($toggle["messaging"])
 				$menu[] = array(get_lang("messaging"),"messaging.php");
 		} else {
 			$menu[] = array($userinfo['username'],'');
 		}
-		if(($master["doublecheckpassword"]&&$master["authbyiponly"])||!$master["authbyiponly"]) $menu[] = array(get_lang("change_pw"),"chng_passwd.php");
+		if(($master["doublecheckpassword"]&&$master["authbyiponly"])||!$master["authbyiponly"]) $menu[] = array(get_lang("change_pw"),"change/chng_passwd.php");
 		$menu[] = array(get_lang("logout"),"logout.php");
 	} else {
 		$menu[] = array(get_lang("logedout_message"),"login.php");
@@ -157,7 +157,7 @@ function mini_menu()
 {
 	global $tree;
 	$menu = array();
-	$file = basename(get_script_name());
+	$file = lancms_page_path();
 	$save = -1;
 	$i = 0;
 	while(!empty($tree[$i])&&$save==-1) {
@@ -254,7 +254,7 @@ function select_tournament($started='')
 			<?php
 		}
 	} else { ?>
-		&nbsp;&nbsp;&nbsp;there are no <?php echo ($started===''?"":($started===0?"unstarted":($started===1?"started":""))); ?> tournaments to list.  do you wish to <a href="admin_tournament.php">add a tournament</a>?
+		&nbsp;&nbsp;&nbsp;there are no <?php echo ($started===''?"":($started===0?"unstarted":($started===1?"started":""))); ?> tournaments to list.  do you wish to <a href="admin/admin_tournament.php">add a tournament</a>?
 		<?php
 	} ?>
 	<br /><?php
@@ -369,6 +369,39 @@ function get_script_name() {
   // should we use preg_split() instead?
   $result = preg_replace($regex, '', $php_self);
   return $result;
+}
+
+/* Pages live in sub-folders (admin/, game/, ...) but always run with the app root as working
+   directory (each page starts with chdir(dirname(__DIR__))). These helpers give the page's path
+   relative to the root, and the URL of the root for the <base> tag, redirects and breadcrumbs. */
+function lancms_page_path() {
+	static $path = null;
+	if ($path === null) {
+		$bs = chr(92);
+		$root = str_replace($bs, '/', realpath(dirname(__FILE__) . '/..'));
+		$file = str_replace($bs, '/', realpath($_SERVER['SCRIPT_FILENAME']));
+		$path = ($root && $file && strpos($file, $root . '/') === 0) ? substr($file, strlen($root) + 1) : basename($_SERVER['SCRIPT_NAME']);
+	}
+	return $path;
+}
+
+function lancms_base_url() {
+	$dir = str_replace(chr(92), '/', dirname($_SERVER['SCRIPT_NAME']));
+	for ($i = substr_count(lancms_page_path(), '/'); $i > 0; $i--) { $dir = dirname($dir); }
+	return rtrim(str_replace(chr(92), '/', $dir), '/') . '/';
+}
+
+// Turn a root-relative page reference into a URL that is valid from the current page.
+// Absolute or protocol-relative URLs are refused (open-redirect protection).
+function lancms_url($url) {
+	if (preg_match('#^([a-z][a-z0-9+.-]*:|//)#i', $url)) { return lancms_base_url() . 'index.php'; }
+	if ($url !== '' && $url[0] === '/') { return $url; }
+	return lancms_base_url() . $url;
+}
+
+// Current URL (with query string, no fragment), HTML-escaped; for same-page #anchor links under <base>.
+function lancms_self_url() {
+	return htmlspecialchars(preg_replace('/#.*$/', '', $_SERVER['REQUEST_URI']), ENT_QUOTES);
 }
 
 function makeCommaDel($array, $name, $seperator) {
